@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
+import Shower from './components/shower'
 import { auth, googleProvider } from './api/firebase'
 import { Switch, Route } from 'react-router-dom'
 import { getPath } from './routes'
 import Sidebar from './components/sidebar'
 // import Kitchen from './components/Kitchen'
 // import Toilet from './components/Toilet'
-// import Bathroom from './components/Bathroom'
+import Shower from './components/Shower'
 import Garden from './components/garden'
 // import Dancefloor from './components/Dancefloor'
 import Header from './components/header'
@@ -87,7 +88,7 @@ class App extends Component {
             <Switch>
               {/* <Route exact={true} path={getPath('kitchen')} component={Kitchen} /> */}
               {/* <Route exact={true} path={getPath('toilet')} component={Toilet} /> */}
-              {/* <Route exact={true} path={getPath('bathroom')} component={Bathroom} /> */}
+              <Route exact={true} path={getPath('bathroom')} component={Shower} />
               <Route exact={true} path={getPath('garden')} component={Garden} />
               {/* <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} /> */}
             </Switch>
