@@ -22,8 +22,8 @@ const StyledDiv = styled.div`
   img.pushennGif {
       width:180px;
       position:absolute;
-      bottom: 19%;
-      right: 23%;
+      bottom: 0%;
+      right: 41%;
   }
 `
 
