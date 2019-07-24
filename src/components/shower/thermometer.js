@@ -80,4 +80,8 @@ class Thermometer extends Component {
     }
 }
 
+<<<<<<< HEAD
 export default Thermometer
+=======
+export default Thermometer
+>>>>>>>  ajout de l'arrière plan et du GIF
