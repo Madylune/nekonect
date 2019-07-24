@@ -12,14 +12,18 @@ const StyledP = styled.p`
 
 const StyledDiv = styled.div`
   background-image: url(${require('../../img/sdb.jpg')});
+  background-size:cover;
+  background-position: center;
   width:100vw;
   height:80vh;
   background-repeat: no-repeat; 
   margin: 0;
+  position: relative;
   img.pushennGif {
       width:180px;
-      position:relative;
-      top: 465px;
+      position:absolute;
+      bottom: 19%;
+      right: 23%;
   }
 `
 
