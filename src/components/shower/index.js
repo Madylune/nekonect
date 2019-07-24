@@ -23,12 +23,13 @@ const StyledDiv = styled.div`
       width:180px;
       position:absolute;
       bottom: 0%;
-      right: 41%;
+      right: 16%;
   }
 `
 
 
 class Shower extends Component {
+// Fonction js declarer 
 
     render() {
         return (

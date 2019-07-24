@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Trait from './trait'
 
 
 // const StyledDiv = styled.div`
@@ -15,13 +16,18 @@ const StyledBar = styled.div`
     -moz-border-radius: 0px 0px 200px 200px;
     -webkit-border-radius: 0px 0px 200px 200px;
     border: 1px solid #000000;
-   
+    background-color: white;
+    z-index: 1;
+
 `
 
 const StyledBarContenue = styled.div`
-   height:20vh;
-   width:20px;
-   background-color: red;  
+    top: 215px;
+    height: 5vh;
+    width: 10px;
+    background-color: red;
+    position: relative;
+    z-index: 2;
 `
 
 const StyledCercle = styled.div`
@@ -56,7 +62,29 @@ class Thermometer extends Component {
             <StyledThermometer>
                 <div className="test">
                 <StyledBar>
-                {/* <StyledBarContenue></StyledBarContenue> */}
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <Trait />
+                    <StyledBarContenue>
+                        
+                    </StyledBarContenue>
                 </StyledBar>
                 <StyledCercle>
 

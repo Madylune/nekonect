@@ -18,6 +18,7 @@ const StyledSidebar = styled.div`
   position: absolute;
   left: 5px;
   top: 5%;
+  z-index: 1;
 `
 
 const StyledButton = styled.div`
