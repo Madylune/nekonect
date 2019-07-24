@@ -5,7 +5,6 @@ import { auth, googleProvider } from './api/firebase'
 import { Switch, Route } from 'react-router-dom'
 import { getPath } from './routes'
 import Sidebar from './components/sidebar'
-// import Kitchen from './components/Kitchen'
 // import Toilet from './components/Toilet'
 import Shower from './components/shower'
 import Garden from './components/garden'
@@ -13,6 +12,7 @@ import Dancefloor from './components/dancefloor'
 import Header from './components/header'
 import Footer from './components/footer'
 import { withRouter } from 'react-router'
+import Kitchen from './components/Kitchen'
 
 const StyledApp = styled.div`
   margin: 0;
@@ -107,8 +107,8 @@ class App extends Component {
           <>
             <Sidebar />
             <Switch>
-              {/* <Route exact={true} path={getPath('kitchen')} component={Kitchen} /> */}
-              {/* <Route exact={true} path={getPath('toilet')} component={Toilet} /> */}
+              <Route exact={true} path={getPath('kitchen')} component={Kitchen} />
+              {/* <Route exact={true} path={getPath('toilet')} component={Toilet} />*/}
               <Route exact={true} path={getPath('bathroom')} component={Shower} />
               <Route exact={true} path={getPath('garden')} component={Garden} />
               <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} />
