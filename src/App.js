@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
-import Shower from './components/shower'
 import { auth, googleProvider } from './api/firebase'
 import { Switch, Route } from 'react-router-dom'
 import { getPath } from './routes'
