@@ -15,6 +15,7 @@ const StyledSidebar = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  position: absolute;
 `
 
 const StyledButton = styled.div`
