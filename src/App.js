@@ -8,21 +8,42 @@ import Sidebar from './components/sidebar'
 // import Kitchen from './components/Kitchen'
 // import Toilet from './components/Toilet'
 // import Bathroom from './components/Bathroom'
-// import Garden from './components/Garden'
+import Garden from './components/garden'
 // import Dancefloor from './components/Dancefloor'
+import { getTime } from './utils/time'
+
+const StyledApp = styled.div`
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
 
 const StyledHeader = styled.header`
+  display: flex;
+  justify-content: ${props => props.user ? 'space-between' : 'center'};
+  align-items: center;
   text-align: center;
-  margin-top: 100px;
-  color: ${props => props.toto};
+  margin-top: ${props => props.user ? '10px' : '100px'};
   .Logo {
-    height: 200px;
+    height: ${props => props.user ? '60px' : '200px'};
+  }
+  .Time {
+    display: ${props => props.user ? 'block' : 'none'};
+    font-weight: bold;
+    font-size: 22px;
   }
 `
 
 const StyledBody = styled.div`
-  margin-top: 20px;
   text-align: center;
+  height: 100%;
+  position: relative;
+  background-image: ${props => props.user ? `url(${require('./img/home.jpg')})` : ''};
   .Button {
     padding: 15px;
     width: 250px;
@@ -36,6 +57,11 @@ const StyledBody = styled.div`
       color: #ffffff;
     }
   }
+`
+
+const StyledFooter = styled.div`
+  height: 125px;
+  background-color: #fff;
 `
 
 class App extends Component {
@@ -66,25 +92,24 @@ class App extends Component {
   render() {
     const { user } = this.state
     return (
-      <div className="App">
-        {!user && (
-        <StyledHeader className="App-header" toto={'red'}>
+      <StyledApp>
+        <StyledHeader className="App-header" user={user}>
           <img src={require('./img/logo_neko_nect.jpg')} className="Logo" alt="logo" />
+          <div className="Time">{getTime(Date.now())}</div>
         </StyledHeader>
-        )}
-        <StyledBody>
+        <StyledBody user={user}>
         {user ? (
-          <div>
+          <>
             <Sidebar />
             <Switch>
-              {/* <Route exact={true} path={getPath('kitchen')} component={Kitchen} />
-              <Route exact={true} path={getPath('toilet')} component={Toilet} />
-              <Route exact={true} path={getPath('bathroom')} component={Bathroom} />
+              {/* <Route exact={true} path={getPath('kitchen')} component={Kitchen} /> */}
+              {/* <Route exact={true} path={getPath('toilet')} component={Toilet} /> */}
+              {/* <Route exact={true} path={getPath('bathroom')} component={Bathroom} /> */}
               <Route exact={true} path={getPath('garden')} component={Garden} />
-              <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} /> */}
+              {/* <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} /> */}
             </Switch>
             {/* <button onClick={signOut}>Se déconnexion</button> */}
-          </div>
+          </>
         ) : (
           <>
           {/* <Button 
@@ -104,7 +129,10 @@ class App extends Component {
           </>
         )}
         </StyledBody>
-      </div>
+        <StyledFooter>
+
+        </StyledFooter>
+      </StyledApp>
     )
   }
 }
