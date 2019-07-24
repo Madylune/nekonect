@@ -21,10 +21,7 @@ export const fieldValue = firebase.firestore.FieldValue
 export const timestamp = firebase.firestore.FieldValue.serverTimestamp()
 
 // Social Sign In Method Provider
-export const providers = {
-  googleProvider: new firebase.auth.GoogleAuthProvider()
-}
-// export const googleProvider = new firebase.auth.GoogleAuthProvider()
-// export const facebookProvider = new firebase.auth.FacebookAuthProvider()
+export const googleProvider = new firebase.auth.GoogleAuthProvider()
+export const facebookProvider = new firebase.auth.FacebookAuthProvider()
 
 export default firebase

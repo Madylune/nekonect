@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
-import withFirebaseAuth from 'react-with-firebase-auth'
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
-import { FIREBASE_CONFIG, providers, auth } from './api/firebase'
+import { auth, googleProvider } from './api/firebase'
 
 
 const StyledHeader = styled.header`
   text-align: center;
   margin-top: 100px;
+  color: ${props => props.toto};
   .Logo {
     height: 200px;
   }
@@ -34,19 +32,42 @@ const StyledBody = styled.div`
 `
 
 class App extends Component {
+  state = {
+    user: null
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user })
+      } 
+    })
+  }
+
+  signInWithGoogle = () => {
+    auth.signInWithPopup(googleProvider)
+    .then((result) => {
+      const user = result.user
+      this.setState({
+        user
+      })
+    }, (error) => {
+      console.log('Error:', error.message)
+    })
+  }  
+
   render() {
-    // const { user } = this.state
-    const { user, signOut, signInWithGoogle, signInWithFacebook } = this.props
+    const { user } = this.state
     return (
       <div className="App">
-        <StyledHeader className="App-header">
+        <StyledHeader className="App-header" toto={'red'}>
           <img src={require('./img/logo_neko_nect.jpg')} className="Logo" alt="logo" />
         </StyledHeader>
         <StyledBody>
         {user ? (
           <div>
             Bonjour
-            <button onClick={signOut}>Se déconnexion</button>
+            {/* <button onClick={signOut}>Se déconnexion</button> */}
           </div>
         ) : (
           <>
@@ -61,7 +82,7 @@ class App extends Component {
             variant="contained" 
             size="small" 
             className="Button Button-google" 
-            onClick={signInWithGoogle}>
+            onClick={this.signInWithGoogle}>
             Se connecter avec Google
           </Button>
           </>
@@ -72,7 +93,4 @@ class App extends Component {
   }
 }
 
-export default withFirebaseAuth({
-  providers,
-  auth,
-})(App);
+export default App
