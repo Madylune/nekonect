@@ -73,10 +73,6 @@ const StyledBody = styled.div`
       background-color: #D6492E;
       color: #ffffff;
     }
-    &.Button-fb {
-      background-color: #38569E;
-      color: #ffffff;
-    }
   }
 `
 
