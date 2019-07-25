@@ -11,8 +11,8 @@ const StyledDiv = styled.div`
   img.pushennGif {
     width: 167px;
     position: absolute;
-    bottom: -456%;
-    right: 17%;
+    bottom: -436%;
+    right: 13%;
     height: auto;
   }
 
@@ -23,7 +23,7 @@ const StyledDiv = styled.div`
     border-radius: 50px;
     margin-left: 20%;
     margin-right: 10%;
-    margin-top: 19%;
+    margin-top: 15%;
     width: 63%;
     display:flex;
     justify-content: space-around;
@@ -80,8 +80,17 @@ class Dancefloor extends Component {
 
     // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
     dance = value => {   
-        console.log(musics[value])
-        var test = document.querySelector(".audio");
+        console.log(musics[value].name)
+        //Boucle sur les différentes pistes audio
+        map(musics, (music, i) => {
+            debugger;
+            // Arrêter de jouer la musique
+            var test = document.querySelector(`.${musics[value].name}`).stop;
+            }
+        )
+
+        // Selectionner la class du lecteur audio
+        var test = document.querySelector(`.${musics[value].name}`);
         test.play();  
       }
     
@@ -92,7 +101,7 @@ class Dancefloor extends Component {
                         {map(musics, (music, i) =>
                             <div key={i} className="Icon-Music-Img">
                                 <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
-                                <audio className="audio"
+                                <audio className={music.name}
                                     controls
                                     src={require(`../../sound//${music.music}`)}>
                                 </audio>

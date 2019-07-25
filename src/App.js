@@ -53,6 +53,7 @@ const StyledBody = styled.div`
   background-image: ${props => props.user && getBodyBg(props.location)};
   background-repeat: no-repeat;
   background-size: cover;
+  background-position-y: center;
 
   .Button {
     padding: 15px;
