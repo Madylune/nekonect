@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const StyledTrait = styled.hr`
-  margin: 10px auto;
+  margin: 23px auto;
   width: 50%;
   height: 0.5px;
   background-color: black;

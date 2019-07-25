@@ -22,11 +22,11 @@ const StyledBar = styled.div`
 `
 
 const StyledBarContenue = styled.div`
-    top: 215px;
-    height: 5vh;
+    top: 300px;
+    height: 13%;
     width: 10px;
     background-color: red;
-    position: relative;
+    position: fixed;
     z-index: 2;
 `
 
@@ -62,16 +62,7 @@ class Thermometer extends Component {
             <StyledThermometer>
                 <div className="test">
                 <StyledBar>
-                    <Trait />
-                    <Trait />
-                    <Trait />
-                    <Trait />
-                    <Trait />
-                    <Trait />
-                    <Trait />
-                    <Trait />
-                    <Trait />
-                    <Trait />
+
                     <Trait />
                     <Trait />
                     <Trait />
@@ -85,6 +76,7 @@ class Thermometer extends Component {
                     <StyledBarContenue>
                         
                     </StyledBarContenue>
+
                 </StyledBar>
                 <StyledCercle>
 
