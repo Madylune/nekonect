@@ -12,6 +12,10 @@ export const getPath = (routeName, params = {}) => {
       return '/garden'
     case 'dancefloor':
       return '/dancefloor'
+    case 'store':
+      return '/store'
+    case 'settings':
+      return '/settings'
     default:
       return routeName
   }

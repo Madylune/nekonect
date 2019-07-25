@@ -10,7 +10,9 @@ import Sidebar from './components/sidebar'
 // import Bathroom from './components/Bathroom'
 import Garden from './components/garden'
 // import Dancefloor from './components/Dancefloor'
-import { getTime } from './utils/time'
+import Header from './components/header'
+import Footer from './components/footer'
+import { withRouter } from 'react-router'
 
 const StyledApp = styled.div`
   margin: 0;
@@ -23,27 +25,14 @@ const StyledApp = styled.div`
   justify-content: space-between;
 `
 
-const StyledHeader = styled.header`
-  display: flex;
-  justify-content: ${props => props.user ? 'space-between' : 'center'};
-  align-items: center;
-  text-align: center;
-  margin-top: ${props => props.user ? '10px' : '100px'};
-  .Logo {
-    height: ${props => props.user ? '60px' : '200px'};
-  }
-  .Time {
-    display: ${props => props.user ? 'block' : 'none'};
-    font-weight: bold;
-    font-size: 22px;
-  }
-`
-
 const StyledBody = styled.div`
   text-align: center;
   height: 100%;
   position: relative;
-  background-image: ${props => props.user ? `url(${require('./img/home.jpg')})` : ''};
+  background-image: ${props => props.user && props.isHome ? `url(${require('./img/home.jpg')})` : ''};
+  background-repeat: no-repeat;
+  background-size: cover;
+
   .Button {
     padding: 15px;
     width: 250px;
@@ -57,11 +46,6 @@ const StyledBody = styled.div`
       color: #ffffff;
     }
   }
-`
-
-const StyledFooter = styled.div`
-  height: 125px;
-  background-color: #fff;
 `
 
 class App extends Component {
@@ -91,13 +75,12 @@ class App extends Component {
 
   render() {
     const { user } = this.state
+    const isHome = this.props.history.location.pathname === '/'
+
     return (
       <StyledApp>
-        <StyledHeader className="App-header" user={user}>
-          <img src={require('./img/logo_neko_nect.jpg')} className="Logo" alt="logo" />
-          <div className="Time">{getTime(Date.now())}</div>
-        </StyledHeader>
-        <StyledBody user={user}>
+        <Header user={user} />
+        <StyledBody user={user} isHome={isHome}>
         {user ? (
           <>
             <Sidebar />
@@ -129,12 +112,10 @@ class App extends Component {
           </>
         )}
         </StyledBody>
-        <StyledFooter>
-
-        </StyledFooter>
+        {user && <Footer />}
       </StyledApp>
     )
   }
 }
 
-export default App
+export default withRouter(App)
