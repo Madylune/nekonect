@@ -1,46 +1,25 @@
-// todo background
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import logo from '../../img/GIF/douche.gif'
 import Thermometer from './thermometer'
 
-
-
-const StyledP = styled.p`
-    color:red;
-`
-
-const StyledDiv = styled.div`
-  background-image: url(${require('../../img/sdb.jpg')});
-  background-size:cover;
-  background-position: center;
-  width:100vw;
-  height:80vh;
-  background-repeat: no-repeat; 
+const StyledShower = styled.div`
   margin: 0;
   position: relative;
-  img.pushennGif {
-      width:180px;
-      position:absolute;
-      bottom: 0%;
-      right: 16%;
+  .Cat {
+    width: 180px;
+    position: absolute;
+    top: 250px;
+    left: 25%;
   }
 `
 
 
-class Shower extends Component {
-// Fonction js declarer 
-
-    render() {
-        return (
-            <StyledDiv>
-                <Thermometer />
-                {/* <StyledP>coucou</StyledP> */}
-                <img className="pushennGif" src={logo} alt="loading..." />
-            </StyledDiv>
-        )
-    }
-}
+const Shower = () =>
+  <StyledShower>
+    <Thermometer />
+    <img className="Cat" src={logo} alt="Chat" />
+  </StyledShower>
 
 export default Shower
 

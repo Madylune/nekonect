@@ -25,11 +25,32 @@ const StyledApp = styled.div`
   justify-content: space-between;
 `
 
+const getBodyBg = location => {
+  switch(true) {
+    case location === getPath('home'):
+      return `url(${require('./img/backgrounds/home.jpg')})`
+    case location === getPath('kitchen'):
+      return `url(${require('./img/backgrounds/kitchen.jpg')})`
+    case location === getPath('toilet'):
+      return `url(${require('./img/backgrounds/toilet.jpg')})`
+    case location === getPath('bathroom'):
+      return `url(${require('./img/backgrounds/bathroom.jpg')})`
+    case location === getPath('garden'):
+      return `url(${require('./img/backgrounds/garden.jpg')})`
+    case location === getPath('dancefloor'):
+      return `url(${require('./img/backgrounds/dancefloor.jpg')})`
+    case location === getPath('store'):
+    case location === getPath('settings'):
+    default:
+      return ''
+  }
+}
+
 const StyledBody = styled.div`
   text-align: center;
   height: 100%;
   position: relative;
-  background-image: ${props => props.user && props.isHome ? `url(${require('./img/home.jpg')})` : ''};
+  background-image: ${props => props.user && getBodyBg(props.location)};
   background-repeat: no-repeat;
   background-size: cover;
 
@@ -75,12 +96,12 @@ class App extends Component {
 
   render() {
     const { user } = this.state
-    const isHome = this.props.history.location.pathname === '/'
+    const location = this.props.history.location.pathname
 
     return (
       <StyledApp>
         <Header user={user} />
-        <StyledBody user={user} isHome={isHome}>
+        <StyledBody user={user} location={location}>
         {user ? (
           <>
             <Sidebar />
