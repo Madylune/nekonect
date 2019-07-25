@@ -15,10 +15,10 @@ const StyledDiv = styled.div`
   position: relative;
   /* Gif pusheen */
   img.pushennGif {
-      width:180px;
-      position:absolute;
-      bottom: 11%;
-     right: 17%;
+    width: 159px;
+    position: absolute;
+    bottom: 14%;
+    right: 19%;
   }
 
 /* Icone music */
@@ -46,26 +46,28 @@ const StyledDiv = styled.div`
       margin-bottom: 10px;
     }
   }
-
 `
+
 // Declaration du tableau des instruments de musics
 const musics = [
     {
       name: "djembe",
       icon: "djembe.png",
+      music: "djembe.mp3",
     },
     {
       name: "guitar",
       icon: "guitar.png",
+      music: "guitar.mp3",
+
     },
     {
       name: "maracas",
       icon: "maracas.png",
+      music: "maracas.mp3",
+
     },
   ]
-
-
-  
 
 
 class Dancefloor extends Component {
@@ -73,6 +75,12 @@ class Dancefloor extends Component {
     // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
     dance = value => {   
         console.log(musics[value])
+        if (musics[value].name == "guitar") 
+        {
+            console.log("good");
+            var test = document.querySelector(".audio");
+            test.play();
+        }   
       }
     
         render() {
@@ -80,11 +88,19 @@ class Dancefloor extends Component {
                 <StyledDiv>
                     <div className="Icon-Music">
                         {map(musics, (music, i) =>
-                            <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
+                            <>
+                                <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
+                                <audio className="audio"
+                                    controls
+                                    src={require(`../../sound//${music.music}`)}>
+                                </audio>
+                            </>
                         )}
-                    </div>
 
+                    </div>
                     <img className="pushennGif" src={logo} alt="loading..." />
+                    {/* <audio>
+                    </audio> */}
                 </StyledDiv>
             )
         }
