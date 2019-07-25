@@ -5,32 +5,33 @@ import map from 'lodash/map'
 
 
 const StyledDiv = styled.div`
-  background-image: url(${require('../../img/party.jpg')});
-  background-size:cover;
-  background-position: center;
-  width:100vw;
-  height:80vh;
-  background-repeat: no-repeat; 
   margin: 0;
   position: relative;
   /* Gif pusheen */
   img.pushennGif {
-    width: 159px;
+    width: 167px;
     position: absolute;
-    bottom: 14%;
-    right: 19%;
+    bottom: -456%;
+    right: 17%;
+    height: auto;
   }
 
 /* Icone music */
-  .Icon-Music {
+.List-Icon-Music {
     background: #ffffff99;
-    padding: 17px 20px;
+    padding: 10px 2px;
     border-radius: 50px;
-    margin-left: 25%;
-    margin-right: 20px;
-    width: 55%;
-    position: absolute;
-    top: 13%
+    margin-left: 20%;
+    margin-right: 10%;
+    margin-top: 19%;
+    width: 63%;
+    display:flex;
+    justify-content: space-around;
+}
+  .Icon-Music-Img {
+    width: 45px;
+    height: 42px;
+  }
     
     img {
       width: 45px;
@@ -38,13 +39,18 @@ const StyledDiv = styled.div`
       padding-left: 6px;
     padding-right: 5px;
     }
+
+    audio {
+        margin:0;
+        padding:0;
+        border:0;
+        outline:0;
+        font-size:100%;
+        vertical-align:baseline;
+        background:transparent;
+        height:0;
+        }
     
-    img.Icon-burger, img.Icon-apple, img.Icon-coffee, img.Icon-water {
-      margin-right: 20px;
-    }
-    img.Icon-burger, img.Icon-apple, img.Icon-cake {
-      margin-bottom: 10px;
-    }
   }
 `
 
@@ -75,26 +81,22 @@ class Dancefloor extends Component {
     // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
     dance = value => {   
         console.log(musics[value])
-        if (musics[value].name == "guitar") 
-        {
-            console.log("good");
-            var test = document.querySelector(".audio");
-            test.play();
-        }   
+        var test = document.querySelector(".audio");
+        test.play();  
       }
     
         render() {
             return (
                 <StyledDiv>
-                    <div className="Icon-Music">
+                    <div className="List-Icon-Music">
                         {map(musics, (music, i) =>
-                            <>
+                            <div key={i} className="Icon-Music-Img">
                                 <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
                                 <audio className="audio"
                                     controls
                                     src={require(`../../sound//${music.music}`)}>
                                 </audio>
-                            </>
+                            </div>
                         )}
 
                     </div>
