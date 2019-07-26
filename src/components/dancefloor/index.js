@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import logo from '../../img/GIF/party.gif'
 import map from 'lodash/map'
+import {Animated} from "react-animated-css";
 
 
 const StyledDiv = styled.div`
@@ -16,9 +17,6 @@ const StyledDiv = styled.div`
     height: auto;
     transition: .3s ease-in-out;
     -webkit-transition: .3s ease-in-out;
-  }
-  .imageMove {
-    right: 26%!important;
   }
 
 /* Icone music */
@@ -99,11 +97,11 @@ class Dancefloor extends Component {
         test.play();
         
         //Move Gif
-        // var image = document.getElementById("toto"); 
-        // image.classList.add('imageMove');
-
+        const element =  document.querySelector('.pushennGif')
+        element.classList.add('animated', 'shake')
 
       }
+
     
         render() {
             return (
@@ -120,9 +118,11 @@ class Dancefloor extends Component {
                         )}
 
                     </div>
-                    <img id="toto" className="pushennGif" src={logo} alt="loading..." />
-                    {/* <audio>
-                    </audio> */}
+
+                <Animated animationIn="shake" animationOut="fadeOut">
+                  <img id="toto" className="pushennGif" src={logo} alt="loading..." />
+                </Animated>
+                   
                 </StyledDiv>
             )
         }
