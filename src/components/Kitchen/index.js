@@ -7,21 +7,20 @@ const Styled = styled.div`
   background-size: cover;
   background-position: center;
   text-align: center;
-  height: 100vh;
+  height: 77vh;
   
 
   .Icon-kitchen {
     background: #ffffff99;
     padding: 15px 20px;
     border-radius: 50px;
-    margin-left: 25%;
-    margin-right: 20px;
+    margin-left: 21%;
     width: 60%;
     position: absolute;
     top: 7%;
     
     img {
-      width: 49px;
+      width: 45px;
       height: 42px;
     }
     
@@ -34,13 +33,80 @@ const Styled = styled.div`
     }
   }
 
-
   img.Gif-faim {
       position: absolute;
       width: 180px;
       bottom: 3%;
       right: 6%;
     }
+
+  .animate-burger {
+    z-index: 1000;
+    position:relative;
+    animation-name: eat-burger;
+    animation-duration: 5s;
+  }
+  .animate-apple {
+    z-index: 1000;
+    position:relative;
+    animation-name: eat-apple;
+    animation-duration: 5s;
+  }
+  .animate-cake {
+    z-index: 1000;
+    position:relative;
+    animation-name: eat-cake;
+    animation-duration: 5s;
+  }
+  .animate-coffee {
+    z-index: 1000;
+    position:relative;
+    animation-name: drink-coffee;
+    animation-duration: 5s;
+  }
+  .animate-water {
+    z-index: 1000;
+    position:relative;
+    animation-name: drink-water;
+    animation-duration: 5s;
+  }
+  .animate-pint {
+    z-index: 1000;
+    position:relative;
+    animation-name: drink-pint;
+    animation-duration: 5s;
+  }
+
+  @keyframes eat-burger {
+    0% { top: 0px; left: 0px }
+    100% { top: 330px; left: 110px }
+  }
+
+  @keyframes eat-apple {
+    0% { top: 0px; left: 0px }
+    100% { top: 330px; left: 40px }
+  }
+
+  @keyframes eat-cake {
+    0% { top: 0px; left: 0px }
+    100% { top: 330px; left: -30px }
+  }
+
+  @keyframes drink-coffee {
+    0% { top: 0px; left: 0px }
+    100% { top: 270px; left: 110px }
+  }
+
+  @keyframes drink-water {
+    0% { top: 0px; left: 0px }
+    100% { top: 270px; left: 40px }
+  }
+
+  @keyframes drink-pint {
+    0% { top: 0px; left: 0px }
+    100% { top: 270px; left: -30px }
+  }
+
 
 `
 
@@ -74,15 +140,28 @@ const foods = [
 
 class Kitchen extends Component {   
     
-    eat = value => {
+    eat = value => {    
 
-                  
-      document.getElementById(foods[value].name).classList.add('animate');
-      document.getElementsByClassName('animate').classList.remove('animate');
+      {map(foods, (food) => 
+        { 
+          console.log(food)
+          if (document.getElementById(food.name).classList.contains(`animate-${food.name}`)) {
+            document.getElementById(food.name).classList.remove(`animate-${food.name}`)
+          }
+        }
+      )} 
+    
+      document.getElementById(foods[value].name).classList.add(`animate-${foods[value].name}`);
 
-      console.log(foods[value])
+      setTimeout(function() {
+        document.getElementById(foods[value].name).classList.remove(`animate-${foods[value].name}`)
+      }, 6000) 
+
+
+      //console.log(foods[value])
     }
 
+ 
     render() {
       
       return (
@@ -94,8 +173,8 @@ class Kitchen extends Component {
                 <img src={require(`../../img/icons/${food.icon}`)} id={food.name} className={`Icon-${food.name}`} alt={`${food.name}`} onClick={() => this.eat(i)} />
               )}                  
             </div>
-            
-            <img src={require('../../img/gif/faim.gif')} className="Gif-faim" alt="Pusheen qui a faim" />
+                      
+            <img src={require('../../img/gif/faim.gif')} className="Gif-faim" alt="Gif de Pusheen qui a faim" />
 
         </Styled>
 
