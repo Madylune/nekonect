@@ -26,11 +26,12 @@ const StyledBar = styled.div`
   background-color: white;
   z-index: 1;
   position: relative;
+  overflow: hidden;
 `
 
 const StyledProgressBar = styled.div`
   bottom: 0;
-  height: 13%;
+  height: 10px;
   width: 100%;
   background-color: red;
   position: absolute;
@@ -50,10 +51,29 @@ const StyledCercle = styled.div`
 `
 
 class Thermometer extends Component {
+  state = {
+    progressHeight: 250
+  }
+  progressBarRef = React.createRef()
+  barRef = React.createRef()
+
+  onTouch = e => {
+    const touchPosition = e.clientY
+    const barHeight = this.barRef.current.offsetHeight
+    this.setState({
+      progressHeight: touchPosition
+    })
+    console.log({ touchPosition })
+    // console.log('progressBarRef', this.progressBarRef.current.offsetTop)
+    // console.log('barHeight', barHeight)
+  }
+  
   render() {
+    const { progressHeight } = this.state
     return (
       <StyledThermometer>
-        <StyledBar>
+        <StyledBar ref={this.barRef} onClick={this.onTouch}>
+          {/* <Trait />
           <Trait />
           <Trait />
           <Trait />
@@ -62,9 +82,14 @@ class Thermometer extends Component {
           <Trait />
           <Trait />
           <Trait />
-          <Trait />
-          <Trait />
-          <StyledProgressBar />
+          <Trait /> */}
+          <StyledProgressBar 
+            ref={this.progressBarRef}
+            style={{
+              transform: `translateY(${-progressHeight}px)`
+              // height: `${progressHeight}px`
+            }}
+          />
         </StyledBar>
         <StyledCercle />
       </StyledThermometer>

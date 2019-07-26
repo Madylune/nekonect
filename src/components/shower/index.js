@@ -9,7 +9,7 @@ const StyledShower = styled.div`
   .Cat {
     width: 180px;
     position: absolute;
-    top: 250px;
+    top: 320px;
     left: 25%;
   }
 `
