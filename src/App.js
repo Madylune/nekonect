@@ -9,7 +9,7 @@ import Sidebar from './components/sidebar'
 // import Toilet from './components/Toilet'
 import Shower from './components/shower'
 import Garden from './components/garden'
-// import Dancefloor from './components/Dancefloor'
+import Dancefloor from './components/dancefloor'
 import Header from './components/header'
 import Footer from './components/footer'
 import { withRouter } from 'react-router'
@@ -53,6 +53,7 @@ const StyledBody = styled.div`
   background-image: ${props => props.user && getBodyBg(props.location)};
   background-repeat: no-repeat;
   background-size: cover;
+  background-position-y: center;
 
   .Button {
     padding: 15px;
@@ -110,7 +111,7 @@ class App extends Component {
               {/* <Route exact={true} path={getPath('toilet')} component={Toilet} /> */}
               <Route exact={true} path={getPath('bathroom')} component={Shower} />
               <Route exact={true} path={getPath('garden')} component={Garden} />
-              {/* <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} /> */}
+              <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} />
             </Switch>
             {/* <button onClick={signOut}>Se déconnexion</button> */}
           </>

@@ -14,7 +14,6 @@ const StyledShower = styled.div`
   }
 `
 
-
 const Shower = () =>
   <StyledShower>
     <Thermometer />
