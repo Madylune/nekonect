@@ -144,7 +144,6 @@ class Kitchen extends Component {
 
       {map(foods, (food) => 
         { 
-          console.log(food)
           if (document.getElementById(food.name).classList.contains(`animate-${food.name}`)) {
             document.getElementById(food.name).classList.remove(`animate-${food.name}`)
           }
@@ -157,8 +156,6 @@ class Kitchen extends Component {
         document.getElementById(foods[value].name).classList.remove(`animate-${foods[value].name}`)
       }, 6000) 
 
-
-      //console.log(foods[value])
     }
 
  
