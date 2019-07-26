@@ -15,8 +15,11 @@ const StyledDiv = styled.div`
     right: 13%;
     height: auto;
     transition: .3s ease-in-out;
+    -webkit-transition: .3s ease-in-out;
   }
-
+  .imageMove {
+    right: 26%!important;
+  }
 
 /* Icone music */
 .List-Icon-Music {
@@ -82,20 +85,24 @@ class Dancefloor extends Component {
 
     // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
     dance = value => {   
-        console.log(musics[value].name)
-        //Boucle sur les différentes pistes audio
-        map(musics, (music, i) => {
 
-            //Arrêter de jouer la musique la fonction dynamique ne fonctionne pas 
+        //Arrêter les différentes musiques
+        map(musics, (music, i) => {
              var soundPlayer = document.querySelector(`.${music.name}`);
              soundPlayer.pause();
              soundPlayer.currentTime = 0;
             }
         )
 
-        // Selectionner la class du lecteur audio
+        // Activer le lecteur audio choisie
         var test = document.querySelector(`.${musics[value].name}`);
-        test.play();  
+        test.play();
+        
+        //Move Gif
+        // var image = document.getElementById("toto"); 
+        // image.classList.add('imageMove');
+
+
       }
     
         render() {
@@ -113,7 +120,7 @@ class Dancefloor extends Component {
                         )}
 
                     </div>
-                    <img className="pushennGif" src={logo} alt="loading..." />
+                    <img id="toto" className="pushennGif" src={logo} alt="loading..." />
                     {/* <audio>
                     </audio> */}
                 </StyledDiv>
