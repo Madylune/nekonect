@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import logo from '../../img/GIF/party.gif'
+import logo from '../../img/gif/party.gif'
 import map from 'lodash/map'
 import {Animated} from "react-animated-css";
 
