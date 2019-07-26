@@ -14,7 +14,9 @@ const StyledDiv = styled.div`
     bottom: -436%;
     right: 13%;
     height: auto;
+    transition: .3s ease-in-out;
   }
+
 
 /* Icone music */
 .List-Icon-Music {
@@ -83,9 +85,11 @@ class Dancefloor extends Component {
         console.log(musics[value].name)
         //Boucle sur les différentes pistes audio
         map(musics, (music, i) => {
-            debugger;
-            // Arrêter de jouer la musique
-            var test = document.querySelector(`.${musics[value].name}`).stop;
+
+            //Arrêter de jouer la musique la fonction dynamique ne fonctionne pas 
+             var soundPlayer = document.querySelector(`.${music.name}`);
+             soundPlayer.pause();
+             soundPlayer.currentTime = 0;
             }
         )
 
