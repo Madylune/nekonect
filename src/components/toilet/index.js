@@ -1,4 +1,5 @@
-import React from 'react'
+
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import logo from '../../img/GIF/toilet.png'
 
@@ -9,15 +10,49 @@ const StyledToilet = styled.div`
   .Cat {
     width: 153px;
     position: absolute;
-    bottom: -397px;
     left: 43%;
+    transition: rotate 1s;
   }
 `
 
+const StyledChasse = styled.div`
+    margin-left: 77vw;
+    margin-top: 28vh;
+    height: 67px;
+    width: 6px;
+    background-color: #555;
+    border-radius: 61px 61px 61px 61px;
+    -moz-border-radius: 61px 61px 61px 61px;
+    -webkit-border-radius: 61px 61px 61px 61px;
+    border: 1px solid #000000;
 
-const Toilet = () =>
-  <StyledToilet>
-    <img className="Cat" src={logo} alt="Chat" />
-  </StyledToilet>
+    .rotate {
+        background-color: blue!important;
+        /* margin-left: 85vw;
+            margin-top: 32vh;
+            transform: rotate(90deg)!important; */
+  }
+`
+
+class Toilet extends Component {
+    chasse() {
+        console.log("coucou");
+
+       document.querySelector('.toiletChasse').style.transform = rotate("90deg");
+       
+    }
+    render() {
+        return (
+
+            <StyledToilet>
+                <StyledChasse className="toiletChasse" onClick={() => this.chasse()} >
+
+                </StyledChasse>
+                <img className="Cat" src={logo} alt="Chat" />
+            </StyledToilet>
+
+        )
+    }
+}
 
 export default Toilet
