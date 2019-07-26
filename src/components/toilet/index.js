@@ -38,7 +38,7 @@ class Toilet extends Component {
     chasse() {
         console.log("coucou");
 
-       document.querySelector('.toiletChasse').style.transform = rotate("90deg");
+       //document.querySelector('.toiletChasse').style.transform = rotate("90deg");
        
     }
     render() {
