@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import random from 'lodash/random'
+import get from 'lodash/get'
+import { MOOD_CHANGE } from '../../reducers/mood'
 
 const StyledMoodBar = styled.div`
   border: 1px solid #cecece;
@@ -20,21 +23,38 @@ const GREEN_BG = 'linear-gradient(to left, #AEF84A 0%, #43CE98 100%)'
 const RED_BG = 'linear-gradient(to left, #F79D36 0%, #EB3A8A 100%)'
 
 class MoodBar extends Component {
-  animationFrame = null
   state = {
     value: 0
   }
   componentDidMount() {
+    const { moodChange } = this.props
     this.intervalID = setInterval(
       () => this.tick(),
       1000
     )
-    this.setState({
-      value: RANDOM_VALUE
-    })
+    moodChange(RANDOM_VALUE)
+    this.initMoodValue()
+  }
+  componentDidUpdate(prevProps) {
+    const { moodValue, makeHappyVal } = this.props
+    if (prevProps.moodValue !== moodValue) {
+      this.initMoodValue()
+    }
+    if (prevProps.makeHappyVal !== makeHappyVal) {
+      this.setState({
+        value: this.state.value + makeHappyVal
+      })
+    }
   }
   componentWillUnmount() {
     clearInterval(this.intervalID)
+  }
+
+  initMoodValue = () => {
+    const { moodValue } = this.props
+    this.setState({
+      value: moodValue
+    })
   }
 
   tick = async () => {
@@ -61,4 +81,13 @@ class MoodBar extends Component {
   }
 }
 
-export default MoodBar
+const mapStateToProps = state => ({
+  moodValue: get(state, ['mood', 'value']),
+  makeHappyVal: get(state, ['mood', 'makeHappyVal'])
+})
+
+const mapDispatchToProps = dispatch => ({
+  moodChange: val => dispatch({ type: MOOD_CHANGE, payload: { value: val } })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoodBar)

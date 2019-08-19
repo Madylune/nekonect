@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import logo from '../../img/gif/party.gif'
 import map from 'lodash/map'
-import {Animated} from "react-animated-css";
+import random from 'lodash/random'
+import {Animated} from "react-animated-css"
+import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 
 
 const StyledDiv = styled.div`
@@ -59,73 +62,71 @@ const StyledDiv = styled.div`
 
 // Declaration du tableau des instruments de musics
 const musics = [
-    {
-      name: "djembe",
-      icon: "djembe.png",
-      music: "djembe.mp3",
-    },
-    {
-      name: "guitar",
-      icon: "guitar.png",
-      music: "guitar.mp3",
+  {
+    name: "djembe",
+    icon: "djembe.png",
+    music: "djembe.mp3",
+  },
+  {
+    name: "guitar",
+    icon: "guitar.png",
+    music: "guitar.mp3",
 
-    },
-    {
-      name: "maracas",
-      icon: "maracas.png",
-      music: "maracas.mp3",
+  },
+  {
+    name: "maracas",
+    icon: "maracas.png",
+    music: "maracas.mp3",
 
-    },
-  ]
+  },
+]
 
 
 class Dancefloor extends Component {
-
-    // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
-    dance = value => {   
-
-        //Arrêter les différentes musiques
-        map(musics, (music, i) => {
-             var soundPlayer = document.querySelector(`.${music.name}`);
-             soundPlayer.pause();
-             soundPlayer.currentTime = 0;
-            }
-        )
-
-        // Activer le lecteur audio choisie
-        var test = document.querySelector(`.${musics[value].name}`);
-        test.play();
-        
-        //Move Gif
-        const element =  document.querySelector('.pushennGif')
-        element.classList.add('animated', 'shake')
-
-      }
-
-    
-        render() {
-            return (
-                <StyledDiv>
-                    <div className="List-Icon-Music">
-                        {map(musics, (music, i) =>
-                            <div key={i} className="Icon-Music-Img">
-                                <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
-                                <audio className={music.name}
-                                    src={require(`../../sound//${music.music}`)}>
-                                </audio>
-                            </div>
-                        )}
-
-                    </div>
-
-                <Animated animationIn="shake" animationOut="fadeOut">
-                  <img id="toto" className="pushennGif" src={logo} alt="loading..." />
-                </Animated>
-                   
-                </StyledDiv>
-            )
+  // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
+  dance = value => {   
+    //Arrêter les différentes musiques
+    map(musics, (music, i) => {
+          var soundPlayer = document.querySelector(`.${music.name}`);
+          soundPlayer.pause();
+          soundPlayer.currentTime = 0;
         }
-    }
+    )
+    // Activer le lecteur audio choisie
+    var test = document.querySelector(`.${musics[value].name}`);
+    test.play();
     
-    export default Dancefloor
+    //Move Gif
+    const element =  document.querySelector('.pushennGif')
+    element.classList.add('animated', 'shake')
+
+    this.props.makeHappy(random(5, 10))
+  }
+
+  render() {
+    return (
+      <StyledDiv>
+        <div className="List-Icon-Music">
+          {map(musics, (music, i) =>
+            <div key={i} className="Icon-Music-Img">
+              <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
+              <audio className={music.name}
+                src={require(`../../sound//${music.music}`)}>
+              </audio>
+            </div>
+          )}
+        </div>
+        <Animated animationIn="shake" animationOut="fadeOut">
+          <img id="toto" className="pushennGif" src={logo} alt="loading..." />
+        </Animated>
+      </StyledDiv>
+    )
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  makeHappy: val => dispatch({ type: MOOD_CHANGED_HAPPY, payload: { makeHappyVal: val } })
+})
+  
+export default connect(null, mapDispatchToProps)(Dancefloor)
     
