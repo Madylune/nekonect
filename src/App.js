@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import get from 'lodash/get'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
 import { auth, googleProvider } from './api/firebase'
@@ -13,6 +15,7 @@ import Header from './components/header'
 import Footer from './components/footer'
 import { withRouter } from 'react-router'
 import Kitchen from './components/Kitchen'
+import GameOver from './components/GameOver'
 
 const StyledApp = styled.div`
   margin: 0;
@@ -97,10 +100,14 @@ class App extends Component {
 
   render() {
     const { user } = this.state
+    const { idDead } = this.props
     const location = this.props.history.location.pathname
-
     return (
       <StyledApp>
+        {idDead ? (
+          <GameOver />
+        ) : ( 
+        <>
         <Header user={true} />
         <StyledBody user={true} location={location}>
         {/* {user ? ( */}
@@ -135,9 +142,15 @@ class App extends Component {
         )} */}
         </StyledBody>
         <Footer />
+        </>
+        )}
       </StyledApp>
     )
   }
 }
 
-export default withRouter(App)
+const mapStateToProps = state => ({
+  idDead: get(state, ['mood', 'idDead'])
+})
+
+export default withRouter(connect(mapStateToProps)(App))
