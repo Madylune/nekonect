@@ -58,6 +58,13 @@ const StyledBody = styled.div`
   background-size: cover;
   background-position-y: center;
 
+  .Neko {
+    height: 200px;
+    position: absolute;
+    bottom: 55px;
+    left: 40%;
+  }
+
   .Button {
     padding: 15px;
     width: 250px;
@@ -140,6 +147,7 @@ class App extends Component {
           </Button>
           </>
         )} */}
+        {location === getPath('home') && <img src={require('./img/push-hello.png')} className="Neko" alt="Neko" />}
         </StyledBody>
         <Footer />
         </>
