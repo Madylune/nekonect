@@ -17,7 +17,7 @@ const StyledToilet = styled.div`
 
 const StyledChasse = styled.div`
     margin-left: 77vw;
-    margin-top: 28vh;
+    margin-top: 20vh;
     height: 67px;
     width: 6px;
     background-color: #555;
@@ -40,10 +40,9 @@ class Toilet extends Component {
         var rotated = false;
         var sound = document.querySelector(".chasseEau");
         sound.play();
-        console.log("coucou");
-        var div = document.querySelector('.toiletChasse');
 
-        var deg = rotated ? 0 : 180;
+        var div = document.querySelector('.toiletChasse');
+        var deg = rotated ? 0 : 80;
 
         div.style.webkitTransform = 'rotate('+deg+'deg)'; 
         div.style.mozTransform    = 'rotate('+deg+'deg)'; 
