@@ -26,18 +26,30 @@ const StyledChasse = styled.div`
     -webkit-border-radius: 61px 61px 61px 61px;
     border: 1px solid #000000;
 
-    .rotate {
+
+    /* .rotate {
         background-color: blue!important;
-        /* margin-left: 85vw;
+        margin-left: 85vw;
             margin-top: 32vh;
-            transform: rotate(90deg)!important; */
-  }
+            /* transform: rotate(90deg)!important; */
 `
 
 class Toilet extends Component {
     chasse() {
-        console.log("coucou");
+    var rotated = false;
 
+        console.log("coucou");
+        var div = document.querySelector('.toiletChasse');
+
+        var deg = rotated ? 0 : 180;
+
+        div.style.webkitTransform = 'rotate('+deg+'deg)'; 
+        div.style.mozTransform    = 'rotate('+deg+'deg)'; 
+        div.style.msTransform     = 'rotate('+deg+'deg)'; 
+        div.style.oTransform      = 'rotate('+deg+'deg)'; 
+        div.style.transform       = 'rotate('+deg+'deg)'; 
+
+        rotated = !rotated;
        //document.querySelector('.toiletChasse').style.transform = rotate("90deg");
        
     }
