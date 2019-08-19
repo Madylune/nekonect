@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import random from 'lodash/random'
 import get from 'lodash/get'
-import { MOOD_CHANGE } from '../../reducers/mood'
+import { MOOD_CHANGE, MOOD_CHANGED_LIFE } from '../../reducers/mood'
 
 const StyledMoodBar = styled.div`
   border: 1px solid #cecece;
@@ -59,10 +59,14 @@ class MoodBar extends Component {
 
   tick = async () => {
     const { value } = this.state
-    if (value > 0) {
+    if (value >= 0) {
       this.setState({
         value: value - 1
       })
+    }
+    if (value <= 0) {
+      clearInterval(this.intervalID)
+      this.props.killCat()
     }
   }
 
@@ -87,7 +91,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  moodChange: val => dispatch({ type: MOOD_CHANGE, payload: { value: val } })
+  moodChange: val => dispatch({ type: MOOD_CHANGE, payload: { value: val } }),
+  killCat: () => dispatch({ type: MOOD_CHANGED_LIFE, payload: { idDead: true } })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoodBar)
