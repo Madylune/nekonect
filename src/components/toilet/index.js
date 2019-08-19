@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import logo from '../../img/GIF/toilet.png'
+import logo from '../../img/gif/toilet.png'
 
 
 const StyledToilet = styled.div`
@@ -25,6 +25,7 @@ const StyledChasse = styled.div`
     -moz-border-radius: 61px 61px 61px 61px;
     -webkit-border-radius: 61px 61px 61px 61px;
     border: 1px solid #000000;
+    animation: flip-diagonal-2-fwd 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 
 
     /* .rotate {
@@ -36,8 +37,9 @@ const StyledChasse = styled.div`
 
 class Toilet extends Component {
     chasse() {
-    var rotated = false;
-
+        var rotated = false;
+        var sound = document.querySelector(".chasseEau");
+        sound.play();
         console.log("coucou");
         var div = document.querySelector('.toiletChasse');
 
@@ -58,7 +60,9 @@ class Toilet extends Component {
 
             <StyledToilet>
                 <StyledChasse className="toiletChasse" onClick={() => this.chasse()} >
-
+                    <audio className="chasseEau"
+                    src={require(`../../sound//chasseEau.mp3`)}>
+                    </audio>
                 </StyledChasse>
                 <img className="Cat" src={logo} alt="Chat" />
             </StyledToilet>
