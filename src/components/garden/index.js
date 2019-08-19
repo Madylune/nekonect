@@ -2,24 +2,53 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
+import { motion, useSpring } from 'framer-motion'
 
 const StyledGarden = styled.div`
-  .Football {
-    height: 105px;
+  .Neko_garden {
+    height: 100px;
     position: absolute;
-    bottom: 0;
-    left: 40%;
+    top: 35%;
+    left: 45%;
+  }
+  .Football {
+    height: 90px;
+    position: absolute;
+    transition: 0.7s;
   }
 `
 
 const Garden = ({ makeHappy }) => {
+  const dampedX = useSpring(0)
+  const dampedY = useSpring(0)
   return (
     <StyledGarden>
       <img 
+        src={require('../../img/gif/faim.gif')} 
+        className="Neko_garden" 
+        alt="Neko" 
+      />
+      <motion.img 
         src={require('../../img/football.png')} 
         className="Football" 
         alt="Ballon de football" 
         onClick={() => makeHappy(50)} 
+        drag
+        dragMomentum={false}
+        dragConstraints={{
+          top: -100,
+          left: -50,
+          right: 50,
+          bottom: 0,
+        }}
+        initial={{
+          bottom: 0,
+          left: '40%'
+        }}
+        style={{
+          x: dampedX,
+          y: dampedY
+        }}
       />
     </StyledGarden>
   )
