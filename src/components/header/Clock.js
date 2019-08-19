@@ -6,6 +6,7 @@ const StyledClock = styled.div`
   display: ${props => props.visible ? 'block' : 'none'};
   font-weight: bold;
   font-size: 22px;
+  margin-right: 5px;
 `
 
 class Clock extends Component {

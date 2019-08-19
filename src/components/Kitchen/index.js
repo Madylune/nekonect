@@ -140,41 +140,39 @@ const foods = [
 
 class Kitchen extends Component {   
     
-    eat = value => {    
-
-      {map(foods, (food) => 
-        { 
-          if (document.getElementById(food.name).classList.contains(`animate-${food.name}`)) {
-            document.getElementById(food.name).classList.remove(`animate-${food.name}`)
-          }
+  eat = value => {    
+    map(foods, (food) => 
+      { 
+        if (document.getElementById(food.name).classList.contains(`animate-${food.name}`)) {
+          document.getElementById(food.name).classList.remove(`animate-${food.name}`)
         }
-      )} 
-    
-      document.getElementById(foods[value].name).classList.add(`animate-${foods[value].name}`);
+      }
+    )
+  
+    document.getElementById(foods[value].name).classList.add(`animate-${foods[value].name}`);
 
-      setTimeout(function() {
-        document.getElementById(foods[value].name).classList.remove(`animate-${foods[value].name}`)
-      }, 6000) 
-
-    }
+    setTimeout(function() {
+      document.getElementById(foods[value].name).classList.remove(`animate-${foods[value].name}`)
+    }, 6000) 
+  }
 
  
     render() {
-      
       return (
-        
         <Styled>
-            
             <div className="Icon-kitchen">
               {map(foods, (food, i) => 
-                <img src={require(`../../img/icons/${food.icon}`)} id={food.name} className={`Icon-${food.name}`} alt={`${food.name}`} onClick={() => this.eat(i)} />
+                <img 
+                  key={i}
+                  src={require(`../../img/icons/${food.icon}`)} 
+                  id={food.name} className={`Icon-${food.name}`} 
+                  alt={`${food.name}`} 
+                  onClick={() => this.eat(i)} />
               )}                  
             </div>
                       
             <img src={require('../../img/gif/faim.gif')} className="Gif-faim" alt="Gif de Pusheen qui a faim" />
-
         </Styled>
-
       )
     }
   }

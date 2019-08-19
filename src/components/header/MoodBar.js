@@ -30,7 +30,7 @@ class MoodBar extends Component {
     const { moodChange } = this.props
     this.intervalID = setInterval(
       () => this.tick(),
-      1000
+      3000
     )
     moodChange(RANDOM_VALUE)
     this.initMoodValue()
@@ -74,7 +74,7 @@ class MoodBar extends Component {
     const { value } = this.state
     const style = {
       width: `${value}%`,
-      transition: '1s ease-out',
+      transition: '2s ease-out',
       backgroundImage: `${value > 50 ? GREEN_BG : RED_BG }`
     }
     return (
