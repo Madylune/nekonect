@@ -7,7 +7,7 @@ import { auth, googleProvider } from './api/firebase'
 import { Switch, Route } from 'react-router-dom'
 import { getPath } from './routes'
 import Sidebar from './components/sidebar'
-// import Toilet from './components/Toilet'
+import Toilet from './components/toilet'
 import Shower from './components/shower'
 import Garden from './components/garden'
 import Dancefloor from './components/dancefloor'
@@ -122,7 +122,7 @@ class App extends Component {
             <Sidebar />
             <Switch>
               <Route exact={true} path={getPath('kitchen')} component={Kitchen} />
-              {/* <Route exact={true} path={getPath('toilet')} component={Toilet} />*/}
+              <Route exact={true} path={getPath('toilet')} component={Toilet} />
               <Route exact={true} path={getPath('bathroom')} component={Shower} />
               <Route exact={true} path={getPath('garden')} component={Garden} />
               <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} />
