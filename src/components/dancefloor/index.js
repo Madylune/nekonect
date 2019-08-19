@@ -111,7 +111,6 @@ class Dancefloor extends Component {
                             <div key={i} className="Icon-Music-Img">
                                 <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
                                 <audio className={music.name}
-                                    controls
                                     src={require(`../../sound//${music.music}`)}>
                                 </audio>
                             </div>

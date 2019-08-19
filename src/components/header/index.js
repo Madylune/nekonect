@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Clock from './Clock'
+import MoodBar from './MoodBar'
 
 const StyledHeader = styled.header`
   display: flex;
@@ -17,6 +18,7 @@ const Header = ({ user }) => {
   return (
     <StyledHeader className="App-header" user={user}>
       <img src={require('../../img/logo_neko_nect.jpg')} className="Logo" alt="logo" />
+      <MoodBar />
       <Clock visible={user} />
     </StyledHeader>
   )
