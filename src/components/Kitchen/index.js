@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import map from 'lodash/map'
+import random from 'lodash/random'
+import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 
 const Styled = styled.div`
   background: url(${require('../../img/neko_nect_cuisine.jpg')});
@@ -154,27 +157,32 @@ class Kitchen extends Component {
     setTimeout(function() {
       document.getElementById(foods[value].name).classList.remove(`animate-${foods[value].name}`)
     }, 6000) 
+    this.props.makeHappy(random(20, 25))
   }
 
  
-    render() {
-      return (
-        <Styled>
-            <div className="Icon-kitchen">
-              {map(foods, (food, i) => 
-                <img 
-                  key={i}
-                  src={require(`../../img/icons/${food.icon}`)} 
-                  id={food.name} className={`Icon-${food.name}`} 
-                  alt={`${food.name}`} 
-                  onClick={() => this.eat(i)} />
-              )}                  
-            </div>
-                      
-            <img src={require('../../img/gif/faim.gif')} className="Gif-faim" alt="Gif de Pusheen qui a faim" />
-        </Styled>
-      )
-    }
+  render() {
+    return (
+      <Styled>
+          <div className="Icon-kitchen">
+            {map(foods, (food, i) => 
+              <img 
+                key={i}
+                src={require(`../../img/icons/${food.icon}`)} 
+                id={food.name} className={`Icon-${food.name}`} 
+                alt={`${food.name}`} 
+                onClick={() => this.eat(i)} />
+            )}                  
+          </div>
+                    
+          <img src={require('../../img/gif/faim.gif')} className="Gif-faim" alt="Gif de Pusheen qui a faim" />
+      </Styled>
+    )
   }
-  
-  export default Kitchen
+}
+
+const mapDispatchToProps = dispatch => ({
+  makeHappy: val => dispatch({ type: MOOD_CHANGED_HAPPY, payload: { makeHappyVal: val } })
+})
+
+export default connect(null, mapDispatchToProps)(Kitchen)
