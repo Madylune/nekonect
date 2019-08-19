@@ -101,9 +101,9 @@ class App extends Component {
 
     return (
       <StyledApp>
-        <Header user={user} />
-        <StyledBody user={user} location={location}>
-        {user ? (
+        <Header user={true} />
+        <StyledBody user={true} location={location}>
+        {/* {user ? ( */}
           <>
             <Sidebar />
             <Switch>
@@ -115,8 +115,8 @@ class App extends Component {
             </Switch>
             {/* <button onClick={signOut}>Se déconnexion</button> */}
           </>
-        ) : (
-          <>
+        {/* ) : ( */}
+          {/* <> */}
           {/* <Button 
             variant="contained" 
             size="small" 
@@ -124,7 +124,7 @@ class App extends Component {
             onClick={() => signInWithFacebook()}>
             Se connecter avec Facebook
           </Button> */}
-          <Button 
+          {/* <Button 
             variant="contained" 
             size="small" 
             className="Button Button-google" 
@@ -132,9 +132,9 @@ class App extends Component {
             Se connecter avec Google
           </Button>
           </>
-        )}
+        )} */}
         </StyledBody>
-        {user && <Footer />}
+        <Footer />
       </StyledApp>
     )
   }
