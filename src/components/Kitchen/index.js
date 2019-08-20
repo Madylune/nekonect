@@ -156,7 +156,7 @@ class Kitchen extends Component {
 
     setTimeout(function() {
       document.getElementById(foods[value].name).classList.remove(`animate-${foods[value].name}`)
-    }, 6000) 
+    }, 5000) 
     this.props.makeHappy(random(20, 25))
   }
 
