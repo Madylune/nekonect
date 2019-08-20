@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import { motion, useSpring } from 'framer-motion'
+import random from 'lodash/random'
 
 const StyledGarden = styled.div`
   .Neko_garden {
@@ -32,7 +33,7 @@ const Garden = ({ makeHappy }) => {
         src={require('../../img/football.png')} 
         className="Football" 
         alt="Ballon de football" 
-        onClick={() => makeHappy(50)} 
+        onClick={() => makeHappy(random(30, 50))} 
         drag
         dragMomentum={false}
         dragConstraints={{

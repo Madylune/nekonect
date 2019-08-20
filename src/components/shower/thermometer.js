@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { motion, useMotionValue } from 'framer-motion'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import map from 'lodash/map'
+import random from 'lodash/random'
 
 const StyledThermometer = styled(motion.div)`
   position: absolute;
@@ -81,7 +82,7 @@ const Thermometer = ({ makeHappy }) => {
           ))}
           <motion.div
             ref={cursorRef}
-            onDrag={() => makeHappy(30)}
+            onDrag={() => makeHappy(random(20, 30))}
             className="Cursor"
             drag="y"
             dragConstraints={constraintsRef}
