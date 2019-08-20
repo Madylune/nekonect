@@ -1,8 +1,11 @@
 
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import logo from '../../img/gif/toilet.png'
-
+import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
+import throttle from 'lodash/throttle'
+import random from 'lodash/random'
 
 const StyledToilet = styled.div`
   margin: 0;
@@ -15,59 +18,82 @@ const StyledToilet = styled.div`
   }
 `
 
-const StyledChasse = styled.div`
-    margin-left: 77vw;
-    margin-top: 20vh;
-    height: 67px;
-    width: 6px;
-    background-color: #555;
-    border-radius: 61px 61px 61px 61px;
-    -moz-border-radius: 61px 61px 61px 61px;
-    -webkit-border-radius: 61px 61px 61px 61px;
-    border: 1px solid #000000;
-    animation: flip-diagonal-2-fwd 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+const StyledFlush = styled.div`
+  margin-left: 77vw;
+  margin-top: 20vh;
+  height: 67px;
+  width: 6px;
+  background-color: #555;
+  border-radius: 61px 61px 61px 61px;
+  -moz-border-radius: 61px 61px 61px 61px;
+  -webkit-border-radius: 61px 61px 61px 61px;
+  border: 1px solid #000000;
+  transition: 2s;
+  animation: ${props => props.animated ? 'rotate-bottom 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both' : ''};
 
-
-    /* .rotate {
-        background-color: blue!important;
-        margin-left: 85vw;
-            margin-top: 32vh;
-            /* transform: rotate(90deg)!important; */
+  @keyframes rotate-bottom {
+    0% {
+      transform: rotate(0);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: rotate(90deg);
+      transform-origin: bottom;
+    }
+  }
 `
+const ANIMATION_TIME = 1500
 
 class Toilet extends Component {
-    chasse() {
-        var rotated = false;
-        var sound = document.querySelector(".chasseEau");
-        sound.play();
-
-        var div = document.querySelector('.toiletChasse');
-        var deg = rotated ? 0 : 80;
-
-        div.style.webkitTransform = 'rotate('+deg+'deg)'; 
-        div.style.mozTransform    = 'rotate('+deg+'deg)'; 
-        div.style.msTransform     = 'rotate('+deg+'deg)'; 
-        div.style.oTransform      = 'rotate('+deg+'deg)'; 
-        div.style.transform       = 'rotate('+deg+'deg)'; 
-
-        rotated = !rotated;
-       //document.querySelector('.toiletChasse').style.transform = rotate("90deg");
-       
+  constructor(props) {
+    super(props)
+    this.timeout = null
+    this.throttle = throttle(this.flush, ANIMATION_TIME)
+    this.state = {
+      animated: false
     }
-    render() {
-        return (
+  }
 
-            <StyledToilet>
-                <StyledChasse className="toiletChasse" onClick={() => this.chasse()} >
-                    <audio className="chasseEau"
-                    src={require(`../../sound//chasseEau.mp3`)}>
-                    </audio>
-                </StyledChasse>
-                <img className="Cat" src={logo} alt="Chat" />
-            </StyledToilet>
+  flush = () => {
+    const { makeHappy } = this.props
+    makeHappy(random(10, 15))
 
-        )
-    }
+    var sound = document.querySelector(".Flush")
+    sound.play()
+
+    this.setState({
+      animated: true
+    })
+    this.timeout = setTimeout(() => {
+      this.setState({
+        animated: false
+      })
+    }, ANIMATION_TIME)
+  }
+
+  componentWillUnmount() {
+    this.throttle.cancel()
+    this.timeout && clearTimeout(this.timeout)
+  }
+
+  render() {
+    const { animated } = this.state
+    return (
+      <StyledToilet>
+        <StyledFlush animated={animated} onClick={this.flush} >
+          <audio className="Flush"
+            src={require(`../../sound//chasseEau.mp3`)}>
+          </audio>
+        </StyledFlush>
+        <img className="Cat" src={logo} alt="Chat" />
+      </StyledToilet>
+
+    )
+  }
 }
 
-export default Toilet
+const mapDispatchToProps = dispatch => ({
+  makeHappy: val => dispatch({ type: MOOD_CHANGED_HAPPY, payload: { makeHappyVal: val } })
+})
+
+export default connect(null, mapDispatchToProps)(Toilet)
