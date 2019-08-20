@@ -44,6 +44,8 @@ const getBodyBg = location => {
       return `url(${require('./img/backgrounds/dancefloor.jpg')})`
     case location === getPath('store'):
     case location === getPath('settings'):
+    case location === getPath('night'):
+      return `url(${require('./img/backgrounds/night.jpg')})`
     default:
       return ''
   }
@@ -115,7 +117,7 @@ class App extends Component {
         <StyledBody user={true} location={location}>
         {/* {user ? ( */}
           <>
-            <Sidebar />
+            <Sidebar location={location} />
             <Switch>
               <Route exact={true} path={getPath('kitchen')} component={Kitchen} />
               <Route exact={true} path={getPath('toilet')} component={Toilet} />
