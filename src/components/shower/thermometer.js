@@ -1,100 +1,99 @@
-import React, { Component } from 'react'
+import React, { useRef } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import Trait from './trait'
+import { motion, useMotionValue } from 'framer-motion'
+import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
+import map from 'lodash/map'
 
-const StyledThermometer = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+const StyledThermometer = styled(motion.div)`
   position: absolute;
-  right: 20px;
-  top: 60px;
-  
-  .Bar_wrapper {
+  top: 25px;
+  right: 25px;
+
+  .Wrapper {
+    width: 35px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    overflow: hidden;
+    border-radius: 30px;
+    background-image: linear-gradient(to bottom, #f53b13 0%, #46C8F5 100%);
     position: relative;
+    border: 2px solid #ffffff;
+
+    .Cursor {
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      background: #ffffff;
+      position: absolute;
+      left: 1px;
+    }
   }
 `
 
-const StyledBar = styled.div`
-  height: 45vh;
-  width: 15px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border: 1px solid #000000;
-  border-bottom: transparent;
-  background-color: white;
-  z-index: 1;
-  position: relative;
-  overflow: hidden;
+const StyledStep = styled.div`
+  border-bottom: 1px solid #ffffff;
+  width: 50%;
 `
 
-const StyledProgressBar = styled.div`
-  bottom: 0;
-  height: 10px;
-  width: 100%;
-  background-color: red;
-  position: absolute;
-  z-index: 2;
-`
-
-const StyledCercle = styled.div`
-  width: 34px;
-  height: 34px;
-  border-radius: 20px;
-  border: 1px solid #000000;
-  background-color:red;
-  position:absolute;
-  bottom: -33px;
-  right: -10px;
-
-`
-
-class Thermometer extends Component {
-  state = {
-    progressHeight: 250
+export const TEMPERATURES = [
+  {
+    from: 0,
+    to: 20, 
+    value: 'VERY_COLD'
+  },
+  {
+    from: 20,
+    to: 40,
+    value: 'COLD'
+  },
+  {
+    from: 40,
+    to: 60,
+    value: 'MEDIUM'
+  },
+  {
+    from: 60,
+    to: 80,
+    value: 'HOT'
+  },
+  {
+    from: 80,
+    to: 100,
+    value: 'VERY_HOT'
   }
-  progressBarRef = React.createRef()
-  barRef = React.createRef()
+]
 
-  onTouch = e => {
-    const touchPosition = e.clientY
-    const barHeight = this.barRef.current.offsetHeight
-    this.setState({
-      progressHeight: touchPosition
-    })
-    console.log({ touchPosition })
-    // console.log('progressBarRef', this.progressBarRef.current.offsetTop)
-    // console.log('barHeight', barHeight)
-  }
-  
-  render() {
-    const { progressHeight } = this.state
+const Thermometer = ({ makeHappy }) => {
+    const constraintsRef = useRef(null)
+    const cursorRef = useRef(null)
+    const y = useMotionValue(0)
     return (
       <StyledThermometer>
-        <StyledBar ref={this.barRef} onClick={this.onTouch}>
-          {/* <Trait />
-          <Trait />
-          <Trait />
-          <Trait />
-          <Trait />
-          <Trait />
-          <Trait />
-          <Trait />
-          <Trait />
-          <Trait /> */}
-          <StyledProgressBar 
-            ref={this.progressBarRef}
-            style={{
-              transform: `translateY(${-progressHeight}px)`
-              // height: `${progressHeight}px`
-            }}
+        <div className="Wrapper" ref={constraintsRef}>
+          {map(TEMPERATURES, temp => (
+            <StyledStep 
+              key={temp.value}
+              style={{ height: `${temp.to - temp.from}%` }}
+            />
+          ))}
+          <motion.div
+            ref={cursorRef}
+            onDrag={() => makeHappy(30)}
+            className="Cursor"
+            drag="y"
+            dragConstraints={constraintsRef}
+            style={{ y }}
           />
-        </StyledBar>
-        <StyledCercle />
+        </div>
       </StyledThermometer>
     )
   }
-}
 
-export default Thermometer
+const mapDispatchToProps = dispatch => ({
+  makeHappy: val => dispatch({ type: MOOD_CHANGED_HAPPY, payload: { makeHappyVal: val } })
+})
+
+export default connect(null, mapDispatchToProps)(Thermometer)
