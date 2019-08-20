@@ -10,10 +10,10 @@ La page sera rechargée après chaque sauvegarde suite à une modification.
 
 Lancer la commande `npm install + npm du package` ou `npm i + nom du package`<br>
 
-## Commandes GIT importantes
-### `git checkout -b` : Créer une branche + aller sur cette branche directement
-### `git pull origin + nom de la branche` : Récupérer les dernières modifications effectuées sur la branche distante
-### `git add -A` : Ajouter tous les fichiers contenants nos modifications
-### `git commit -m + "commentaire"` : Ajouter un commit
-### `git push origin + nom de la branche` : Pousser notre travail sur une branche distante
-### `git rebase + nom de la branche` : Mettre notre branche au niveau d'une autre branche
+### Commandes GIT importantes
+- `git checkout -b` : Créer une branche + aller sur cette branche directement
+- `git pull origin + nom de la branche` : Récupérer les dernières modifications effectuées sur la branche distante
+- `git add -A` : Ajouter tous les fichiers contenants nos modifications
+- `git commit -m + "commentaire"` : Ajouter un commit
+- `git push origin + nom de la branche` : Pousser notre travail sur une branche distante
+- `git rebase + nom de la branche` : Mettre notre branche au niveau d'une autre branche
