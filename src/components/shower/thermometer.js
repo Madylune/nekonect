@@ -82,7 +82,7 @@ const Thermometer = ({ makeHappy }) => {
           ))}
           <motion.div
             ref={cursorRef}
-            onDrag={() => makeHappy(random(20, 30))}
+            onDrag={() => makeHappy(random(0, 1))}
             className="Cursor"
             drag="y"
             dragConstraints={constraintsRef}

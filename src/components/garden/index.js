@@ -34,6 +34,7 @@ const Garden = ({ makeHappy }) => {
         className="Football" 
         alt="Ballon de football" 
         onClick={() => makeHappy(random(30, 50))} 
+        onDrag={() => makeHappy(random(1, 3))}
         drag
         dragMomentum={false}
         dragConstraints={{
