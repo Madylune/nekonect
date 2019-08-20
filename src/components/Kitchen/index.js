@@ -5,13 +5,12 @@ import map from 'lodash/map'
 import random from 'lodash/random'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 
-const Styled = styled.div`
+const StyledKitchen = styled.div`
   background: url(${require('../../img/neko_nect_cuisine.jpg')});
   background-size: cover;
   background-position: center;
   text-align: center;
   height: 77vh;
-  
 
   .Icon-kitchen {
     background: #ffffff99;
@@ -36,7 +35,7 @@ const Styled = styled.div`
     }
   }
 
-  img.Gif-faim {
+  .Neko_kitchen {
       position: absolute;
       width: 180px;
       bottom: 3%;
@@ -141,42 +140,45 @@ const foods = [
 ]
 
 
-class Kitchen extends Component {   
-    
-  eat = value => {    
-    map(foods, (food) => 
-      { 
-        if (document.getElementById(food.name).classList.contains(`animate-${food.name}`)) {
-          document.getElementById(food.name).classList.remove(`animate-${food.name}`)
-        }
-      }
-    )
-  
-    document.getElementById(foods[value].name).classList.add(`animate-${foods[value].name}`);
+class Kitchen extends Component {
+  timeout = null   
+  state = {
+    animateItem: undefined
+  }
 
-    setTimeout(function() {
-      document.getElementById(foods[value].name).classList.remove(`animate-${foods[value].name}`)
-    }, 5000) 
+  eat = i => {  
+    this.setState({
+      animateItem: i
+    }) 
+    this.timeout = setTimeout(() => {
+      this.setState({
+        animateItem: undefined
+      })
+    }, 5000)
+
     this.props.makeHappy(random(20, 25))
   }
 
- 
+  componentWillUnmount() {
+    this.timeout && clearTimeout(this.timeout)
+  }
+
   render() {
+    const { animateItem } = this.state
     return (
-      <Styled>
+      <StyledKitchen>
           <div className="Icon-kitchen">
             {map(foods, (food, i) => 
               <img 
                 key={i}
                 src={require(`../../img/icons/${food.icon}`)} 
-                id={food.name} className={`Icon-${food.name}`} 
+                id={food.name} className={`Icon-${food.name} ${animateItem === i ? `animate-${food.name}` : ''}`} 
                 alt={`${food.name}`} 
                 onClick={() => this.eat(i)} />
             )}                  
-          </div>
-                    
-          <img src={require('../../img/gif/faim.gif')} className="Gif-faim" alt="Gif de Pusheen qui a faim" />
-      </Styled>
+          </div>       
+          <img src={require('../../img/gif/faim.gif')} className="Neko_kitchen" alt="Gif de Pusheen qui a faim" />
+      </StyledKitchen>
     )
   }
 }
