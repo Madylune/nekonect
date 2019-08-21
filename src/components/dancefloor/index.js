@@ -20,7 +20,18 @@ const StyledDiv = styled.div`
     height: auto;
     transition: .3s ease-in-out;
     -webkit-transition: .3s ease-in-out;
+    animation:  ${props => props.animated ? 'dance 1.2s infinite alternate both' : '' };
+    }
+    @keyframes dance {
+  0% {
+    transform: translateX(0);
   }
+  100% {
+    transform: translateX(-100px);
+  }
+}
+  }
+  
 
 /* Icone music */
 .List-Icon-Music {
@@ -80,9 +91,18 @@ const musics = [
 
   },
 ]
-
+const ANIMATION_TIME = 1500
 
 class Dancefloor extends Component {
+
+  constructor(props) {
+    super(props)
+    this.timeout = null
+    this.state = {
+      animated: false
+    }
+  }
+
   // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
   dance = value => {   
     //Arrêter les différentes musiques
@@ -92,9 +112,22 @@ class Dancefloor extends Component {
           soundPlayer.currentTime = 0;
         }
     )
+
     // Activer le lecteur audio choisie
     var test = document.querySelector(`.${musics[value].name}`);
     test.play();
+
+    // Animer le pusheen
+    this.setState({
+      animated: true
+    })
+
+    // Suprimer la propriétée danser
+    this.timeout = setTimeout(() => {
+      this.setState({
+        animated: false
+      })
+    }, 7000)
     
     //Move Gif
     const element =  document.querySelector('.pushennGif')
@@ -104,8 +137,10 @@ class Dancefloor extends Component {
   }
 
   render() {
+    const { animated } = this.state
+    console.log(animated)
     return (
-      <StyledDiv>
+      <StyledDiv animated={animated}>
         <div className="List-Icon-Music">
           {map(musics, (music, i) =>
             <div key={i} className="Icon-Music-Img">
@@ -116,9 +151,7 @@ class Dancefloor extends Component {
             </div>
           )}
         </div>
-        <Animated animationIn="shake" animationOut="fadeOut">
           <img id="toto" className="pushennGif" src={logo} alt="loading..." />
-        </Animated>
       </StyledDiv>
     )
   }
