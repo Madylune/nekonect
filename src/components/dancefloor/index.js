@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import logo from '../../img/gif/party.gif'
 import map from 'lodash/map'
 import random from 'lodash/random'
-import {Animated} from "react-animated-css"
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 
 
@@ -91,7 +90,6 @@ const musics = [
 
   },
 ]
-const ANIMATION_TIME = 1500
 
 class Dancefloor extends Component {
 
@@ -138,7 +136,6 @@ class Dancefloor extends Component {
 
   render() {
     const { animated } = this.state
-    console.log(animated)
     return (
       <StyledDiv animated={animated}>
         <div className="List-Icon-Music">
