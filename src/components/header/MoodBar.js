@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import random from 'lodash/random'
 import get from 'lodash/get'
-import { MOOD_CHANGE, MOOD_CHANGED_LIFE } from '../../reducers/mood'
+import { MOOD_CHANGE, MOOD_CHANGED_LIFE, MOOD_IS_MAX } from '../../reducers/mood'
 
 const StyledMoodBar = styled.div`
   border: 1px solid #cecece;
@@ -23,31 +23,38 @@ const GREEN_BG = 'linear-gradient(to left, #AEF84A 0%, #43CE98 100%)'
 const RED_BG = 'linear-gradient(to left, #F79D36 0%, #EB3A8A 100%)'
 
 class MoodBar extends Component {
+  intervalID = null
   state = {
     value: 0
   }
+
   componentDidMount() {
-    const { moodChange } = this.props
-    this.intervalID = setInterval(
-      () => this.tick(),
-      3000
-    )
-    moodChange(RANDOM_VALUE)
-    this.initMoodValue()
+    this.startTicking()
   }
+
   componentDidUpdate(prevProps) {
-    const { moodValue, makeHappyVal } = this.props
+    const { moodValue, makeHappyVal, isNight, changeMoodMax } = this.props
+    const { value } = this.state
     if (prevProps.moodValue !== moodValue) {
       this.initMoodValue()
     }
-    if (prevProps.makeHappyVal !== makeHappyVal) {
+    // Add points to mood when receive action "MOOD_CHANGED_HAPPY"
+    if (prevProps.makeHappyVal !== makeHappyVal && value < 100) {
       this.setState({
         value: this.state.value + makeHappyVal
       })
     }
+    if (prevProps.isNight !== isNight) {
+      isNight ? this.stopTicking() : this.startTicking()
+    }
+    if (value >= 100) {
+      changeMoodMax(true)
+      this.stopTicking()
+    } 
   }
+  
   componentWillUnmount() {
-    clearInterval(this.intervalID)
+    this.stopTicking()
   }
 
   initMoodValue = () => {
@@ -56,6 +63,18 @@ class MoodBar extends Component {
       value: moodValue
     })
   }
+
+  startTicking = () => {
+    const { moodChange } = this.props
+    this.intervalID = setInterval(
+      () => this.tick(),
+      3000
+    )
+    moodChange(RANDOM_VALUE)
+    this.initMoodValue()
+  }
+
+  stopTicking = () => this.intervalID && clearInterval(this.intervalID)
 
   tick = async () => {
     const { value } = this.state
@@ -87,12 +106,14 @@ class MoodBar extends Component {
 
 const mapStateToProps = state => ({
   moodValue: get(state, ['mood', 'value']),
-  makeHappyVal: get(state, ['mood', 'makeHappyVal'])
+  makeHappyVal: get(state, ['mood', 'makeHappyVal']),
+  isNight: get(state, ['time', 'timeIsNight'])
 })
 
 const mapDispatchToProps = dispatch => ({
   moodChange: val => dispatch({ type: MOOD_CHANGE, payload: { value: val } }),
-  killCat: () => dispatch({ type: MOOD_CHANGED_LIFE, payload: { idDead: true } })
+  killCat: () => dispatch({ type: MOOD_CHANGED_LIFE, payload: { isDead: true } }),
+  changeMoodMax: val => dispatch({ type: MOOD_IS_MAX, payload: { value: val } })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoodBar)

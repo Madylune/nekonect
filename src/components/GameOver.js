@@ -53,7 +53,7 @@ class GameOver extends Component {
 
 const mapDispatchToProps = dispatch => ({
   moodChange: val => dispatch({ type: MOOD_CHANGE, payload: { value: val } }),
-  rebornCat: () => dispatch({ type: MOOD_CHANGED_LIFE, payload: { idDead: false } })
+  rebornCat: () => dispatch({ type: MOOD_CHANGED_LIFE, payload: { isDead: false } })
 })
 
 export default connect(null, mapDispatchToProps)(GameOver)

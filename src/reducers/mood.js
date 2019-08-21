@@ -4,10 +4,12 @@ export const MOOD_CHANGE = 'mood.change'
 export const MOOD_CHANGED_HAPPY = 'mood.changed.happy'
 export const MOOD_CHANGED_UNHAPPY = 'mood.changed.unhappy'
 export const MOOD_CHANGED_LIFE = 'mood.changed.dead'
+export const MOOD_IS_MAX = 'mood.is.max'
 
 const initialState = {
   value: null,
-  idDead: false
+  isDead: false,
+  moodIsMax: false
 }
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -25,7 +27,12 @@ const reducer = (state = initialState, { type, payload }) => {
     case MOOD_CHANGED_LIFE:
       return {
         ...state,
-        idDead: get(payload, 'idDead')
+        isDead: get(payload, 'isDead')
+      }
+    case MOOD_IS_MAX:
+      return {
+        ...state,
+        moodIsMax: true
       }
     default:
       return state

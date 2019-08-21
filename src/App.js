@@ -16,6 +16,7 @@ import Footer from './components/footer'
 import { withRouter } from 'react-router'
 import Kitchen from './components/Kitchen'
 import GameOver from './components/GameOver'
+import Night from './components/night'
 
 const StyledApp = styled.div`
   margin: 0;
@@ -44,6 +45,8 @@ const getBodyBg = location => {
       return `url(${require('./img/backgrounds/dancefloor.jpg')})`
     case location === getPath('store'):
     case location === getPath('settings'):
+    case location === getPath('night'):
+      return `url(${require('./img/backgrounds/night.jpg')})`
     default:
       return ''
   }
@@ -103,11 +106,11 @@ class App extends Component {
 
   render() {
     const { user } = this.state
-    const { idDead } = this.props
+    const { isDead } = this.props
     const location = this.props.history.location.pathname
     return (
       <StyledApp>
-        {idDead ? (
+        {isDead ? (
           <GameOver />
         ) : ( 
         <>
@@ -115,13 +118,14 @@ class App extends Component {
         <StyledBody user={true} location={location}>
         {/* {user ? ( */}
           <>
-            <Sidebar />
+            <Sidebar location={location} />
             <Switch>
               <Route exact={true} path={getPath('kitchen')} component={Kitchen} />
               <Route exact={true} path={getPath('toilet')} component={Toilet} />
               <Route exact={true} path={getPath('bathroom')} component={Shower} />
               <Route exact={true} path={getPath('garden')} component={Garden} />
               <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} />
+              <Route exact={true} path={getPath('night')} component={Night} />
             </Switch>
             {/* <button onClick={signOut}>Se déconnexion</button> */}
           </>
@@ -154,7 +158,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  idDead: get(state, ['mood', 'idDead'])
+  isDead: get(state, ['mood', 'isDead'])
 })
 
 export default withRouter(connect(mapStateToProps)(App))
