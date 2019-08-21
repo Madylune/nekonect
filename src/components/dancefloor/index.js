@@ -20,20 +20,18 @@ const StyledDiv = styled.div`
     transition: .3s ease-in-out;
     -webkit-transition: .3s ease-in-out;
     animation:  ${props => props.animated ? 'dance 1.2s infinite alternate both' : '' };
+  }
+  @keyframes dance {
+    0% {
+      transform: translateX(0);
     }
-    @keyframes dance {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100px);
-  }
-}
+    100% {
+      transform: translateX(-100px);
+    }
   }
   
-
-/* Icone music */
-.List-Icon-Music {
+  /* Icone music */
+  .List-Icon-Music {
     background: #ffffff99;
     padding: 10px 2px;
     border-radius: 50px;
@@ -43,30 +41,28 @@ const StyledDiv = styled.div`
     width: 63%;
     display:flex;
     justify-content: space-around;
-}
+  }
   .Icon-Music-Img {
     width: 45px;
     height: 42px;
-  }
-    
+
     img {
       width: 45px;
       height: 42px;
       padding-left: 6px;
-    padding-right: 5px;
+      padding-right: 5px;
     }
+  }
 
-    audio {
-        margin:0;
-        padding:0;
-        border:0;
-        outline:0;
-        font-size:100%;
-        vertical-align:baseline;
-        background:transparent;
-        height:0;
-        }
-    
+  audio {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+    height:0;
   }
 `
 
@@ -92,13 +88,9 @@ const musics = [
 ]
 
 class Dancefloor extends Component {
-
-  constructor(props) {
-    super(props)
-    this.timeout = null
-    this.state = {
-      animated: false
-    }
+  timeout = null
+  state = {
+    animated: false
   }
 
   // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
@@ -126,10 +118,6 @@ class Dancefloor extends Component {
         animated: false
       })
     }, 7000)
-    
-    //Move Gif
-    const element =  document.querySelector('.pushennGif')
-    element.classList.add('animated', 'shake')
 
     this.props.makeHappy(random(5, 10))
   }
@@ -143,12 +131,12 @@ class Dancefloor extends Component {
             <div key={i} className="Icon-Music-Img">
               <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
               <audio className={music.name}
-                src={require(`../../sound//${music.music}`)}>
+                src={require(`../../sound/${music.music}`)}>
               </audio>
             </div>
           )}
         </div>
-          <img id="toto" className="pushennGif" src={logo} alt="loading..." />
+          <img className="pushennGif" src={logo} alt="loading..." />
       </StyledDiv>
     )
   }
