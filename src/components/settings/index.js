@@ -1,15 +1,31 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import sound from '../../img/icons/speaker2.png'
+import sound from '../../img/icons/speaker.png'
+import papatte from '../../img/backgrounds/papatte.png'
 
 
+const StyledSettingsGlobal = styled.div`
+    height: 100%;
+    .papatte {
+      position: absolute; 
+    width: 339px;
+    padding-left: -33%;
+    padding-top: 23%;
+    opacity: 0.1;
+    margin-left: -41%;
+  }
+`
 
 const StyledSettings = styled.div`
-margin-top: 118px;
+  position: absolute;
+  padding-top: 40%;
+  padding-left: 26%;
+  z-index: 2;
+
 `
 const StyledText = styled.h1`
-    color:#b4a89c;
+    color:#726266;
     font-family: 'Raleway', sans-serif;
     font-size: 1em;
 
@@ -60,9 +76,9 @@ const StyledButton = styled.div`
       width: 30px;
       width: 13rem;
       margin-top: 10px;
-      background-color: white;
-      color: #b4a89c;
-      border: 1.5px solid #f19fb1;
+      background-color: #EDCCD3;
+      color: white;
+      border: 1.5px solid #b4a89c;
       border-radius: 45px;
       height: 30px;
     }
@@ -87,24 +103,29 @@ class Settings extends Component {
     render() {
       
         return (
+          <StyledSettingsGlobal>
+                <img src={papatte} className="papatte" />
+
             <StyledSettings>
               <StyledText>Nom : Pusheen</StyledText>
               <StyledText>Age : 33 jours</StyledText>
               <StyledText>Sexe : Masculin</StyledText>
               <StyledImg>
-              <img src={sound}  className="speaker"/>
+                <img src={sound} className="speaker" />
 
-  <input type="range" className="slider" id="myRange"
-          max="50" min="0" step="0.01"/>
+                <input type="range" className="slider" id="myRange"
+                  max="50" min="0" step="0.01" />
 
               </StyledImg>
               <StyledButton>
-              <input type="button" value="Condition général" className="button"></input>
-              <input type="button" value="Reset la partie" className="button"></input>
-            
+                <input type="button" value="Condition général" className="button"></input>
+                <input type="button" value="Reset la partie" className="button"></input>
+
               </StyledButton>
 
             </StyledSettings>
+          </StyledSettingsGlobal>
+        
 
 
         )
