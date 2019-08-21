@@ -8,6 +8,15 @@
 - Aller sur le repo github et créer une pull request (PR) en appuyant sur le bouton `Compare & pull request`
 - Attendre que le lead dev valide votre PR et la merge sur dev
 
+## En cas de conflit sur votre PR
+- Mettre à jour votre version de dev `git checkout dev` puis `git pull origin dev`
+- Retourner sur votre branche `git checkout nom_de_la_branche`
+- Mettre votre branche au niveau de dev `git rebase dev`
+- Règler les conflits présents dans votre IDE
+- Ajouter vos modifications `git add -A`
+- Confirmer `git rebase --continue`
+- Pousser votre travail sur le repo distant `git push --force origin nom_de_la_branche`
+
 ### `npm start` : Lancer l'application pour le développement
 
 Lancer la commande `npm start`<br>

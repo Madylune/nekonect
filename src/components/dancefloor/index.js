@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import logo from '../../img/gif/party.gif'
 import map from 'lodash/map'
 import random from 'lodash/random'
-import {Animated} from "react-animated-css"
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 
 
@@ -15,15 +14,24 @@ const StyledDiv = styled.div`
   img.pushennGif {
     width: 167px;
     position: absolute;
-    bottom: -436%;
+    bottom: -552%;
     right: 13%;
     height: auto;
     transition: .3s ease-in-out;
     -webkit-transition: .3s ease-in-out;
+    animation:  ${props => props.animated ? 'dance 1.2s infinite alternate both' : '' };
   }
-
-/* Icone music */
-.List-Icon-Music {
+  @keyframes dance {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100px);
+    }
+  }
+  
+  /* Icone music */
+  .List-Icon-Music {
     background: #ffffff99;
     padding: 10px 2px;
     border-radius: 50px;
@@ -33,30 +41,28 @@ const StyledDiv = styled.div`
     width: 63%;
     display:flex;
     justify-content: space-around;
-}
+  }
   .Icon-Music-Img {
     width: 45px;
     height: 42px;
-  }
-    
+
     img {
       width: 45px;
       height: 42px;
       padding-left: 6px;
-    padding-right: 5px;
+      padding-right: 5px;
     }
+  }
 
-    audio {
-        margin:0;
-        padding:0;
-        border:0;
-        outline:0;
-        font-size:100%;
-        vertical-align:baseline;
-        background:transparent;
-        height:0;
-        }
-    
+  audio {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+    height:0;
   }
 `
 
@@ -81,8 +87,12 @@ const musics = [
   },
 ]
 
-
 class Dancefloor extends Component {
+  timeout = null
+  state = {
+    animated: false
+  }
+
   // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
   dance = value => {   
     //Arrêter les différentes musiques
@@ -92,33 +102,41 @@ class Dancefloor extends Component {
           soundPlayer.currentTime = 0;
         }
     )
+
     // Activer le lecteur audio choisie
     var test = document.querySelector(`.${musics[value].name}`);
     test.play();
-    
-    //Move Gif
-    const element =  document.querySelector('.pushennGif')
-    element.classList.add('animated', 'shake')
+
+    // Animer le pusheen
+    this.setState({
+      animated: true
+    })
+
+    // Suprimer la propriétée danser
+    this.timeout = setTimeout(() => {
+      this.setState({
+        animated: false
+      })
+    }, 7000)
 
     this.props.makeHappy(random(5, 10))
   }
 
   render() {
+    const { animated } = this.state
     return (
-      <StyledDiv>
+      <StyledDiv animated={animated}>
         <div className="List-Icon-Music">
           {map(musics, (music, i) =>
             <div key={i} className="Icon-Music-Img">
               <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
               <audio className={music.name}
-                src={require(`../../sound//${music.music}`)}>
+                src={require(`../../sound/${music.music}`)}>
               </audio>
             </div>
           )}
         </div>
-        <Animated animationIn="shake" animationOut="fadeOut">
-          <img id="toto" className="pushennGif" src={logo} alt="loading..." />
-        </Animated>
+          <img className="pushennGif" src={logo} alt="loading..." />
       </StyledDiv>
     )
   }
