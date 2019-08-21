@@ -1,14 +1,13 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import sound from '../../img/icons/speaker.png'
 import papatte from '../../img/backgrounds/papatte.png'
 
-
 const StyledSettingsGlobal = styled.div`
-    height: 100%;
-    .papatte {
-      position: absolute; 
+  height: 100%;
+  .papatte {
+    position: absolute; 
     width: 339px;
     padding-left: -33%;
     padding-top: 23%;
@@ -25,9 +24,9 @@ const StyledSettings = styled.div`
 
 `
 const StyledText = styled.h1`
-    color:#726266;
-    font-family: 'Raleway', sans-serif;
-    font-size: 1em;
+  color:#726266;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1em;
 
 `
 
@@ -85,51 +84,26 @@ const StyledButton = styled.div`
 
 `
 
-
-class Settings extends Component {
-   controlMusicVolume = () => {
-      let bgMusic = document.querySelector('#bgSong');
-    let volumeValue = document.querySelector('.music-volume').value;
-    if (volumeValue == 50) {
-        bgMusic.volume = 1.0;
-    } else if (volumeValue < 50 && volumeValue >= 20) {
-        bgMusic.volume = 0.5;
-    } else if (volumeValue < 20 && volumeValue >= 5) {
-        bgMusic.volume = 0.2;
-    } else {
-        bgMusic.volume = 0;
-    }
-}
-    render() {
-      
-        return (
-          <StyledSettingsGlobal>
-                <img src={papatte} className="papatte" />
-
-            <StyledSettings>
-              <StyledText>Nom : Pusheen</StyledText>
-              <StyledText>Age : 33 jours</StyledText>
-              <StyledText>Sexe : Masculin</StyledText>
-              <StyledImg>
-                <img src={sound} className="speaker" />
-
-                <input type="range" className="slider" id="myRange"
-                  max="50" min="0" step="0.01" />
-
-              </StyledImg>
-              <StyledButton>
-                <input type="button" value="Condition général" className="button"></input>
-                <input type="button" value="Reset la partie" className="button"></input>
-
-              </StyledButton>
-
-            </StyledSettings>
-          </StyledSettingsGlobal>
-        
-
-
-        )
-    }
+const Settings = () => {
+  return (
+    <StyledSettingsGlobal>
+      <img src={papatte} className="papatte" alt="Patte de chat" />
+      <StyledSettings>
+        <StyledText>Nom : Pusheen</StyledText>
+        <StyledText>Age : 33 jours</StyledText>
+        <StyledText>Sexe : Masculin</StyledText>
+        <StyledImg>
+          <img src={sound} className="speaker" alt="Haut parleur" />
+          <input type="range" className="slider" id="myRange"
+            max="50" min="0" step="0.01" />
+        </StyledImg>
+        <StyledButton>
+          <input type="button" value="Condition général" className="button"></input>
+          <input type="button" value="Reset la partie" className="button"></input>
+        </StyledButton>
+      </StyledSettings>
+    </StyledSettingsGlobal>
+  )
 }
 
 export default Settings
