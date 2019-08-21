@@ -38,7 +38,7 @@ const Sidebar = ({ location }) => {
       {map(activities, (activity, i) => {
       const wakeupIcon = get(activity, 'name') === 'wakeup'
       return (
-        <Link to={getPath(activity.path)} key={i}>
+        <Link className="Link" to={getPath(activity.path)} key={i} onClick={e => isNight && !wakeupIcon && e.preventDefault()}>
           <StyledButton isNight={!wakeupIcon && isNight} wakeupIcon={!isNight && wakeupIcon}>
             <img src={require(`../../img/icons/${activity.icon}`)} alt={`Icone ${activity.name}`} />
           </StyledButton>
