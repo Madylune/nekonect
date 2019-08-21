@@ -46,8 +46,6 @@ const getBodyBg = location => {
       return `url(${require('./img/backgrounds/garden.jpg')})`
     case location === getPath('dancefloor'):
       return `url(${require('./img/backgrounds/dancefloor.jpg')})`
-    case location === getPath('store'):
-    case location === getPath('settings'):
     case location === getPath('night'):
       return `url(${require('./img/backgrounds/night.jpg')})`
     default:
