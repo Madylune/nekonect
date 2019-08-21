@@ -17,6 +17,9 @@ import { withRouter } from 'react-router'
 import Kitchen from './components/Kitchen'
 import GameOver from './components/GameOver'
 import Night from './components/night'
+import Settings from './components/settings'
+import './index.css'
+
 
 const StyledApp = styled.div`
   margin: 0;
@@ -126,6 +129,7 @@ class App extends Component {
               <Route exact={true} path={getPath('garden')} component={Garden} />
               <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} />
               <Route exact={true} path={getPath('night')} component={Night} />
+              <Route exact={true} path={getPath('settings')} component={Settings} />
             </Switch>
             {/* <button onClick={signOut}>Se déconnexion</button> */}
           </>
