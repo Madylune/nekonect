@@ -16,6 +16,8 @@ export const getPath = (routeName, params = {}) => {
       return '/store'
     case 'settings':
       return '/settings'
+    case 'night':
+      return '/night'
     default:
       return routeName
   }

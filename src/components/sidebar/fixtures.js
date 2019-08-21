@@ -16,11 +16,13 @@ export const activities = [
   },
   {
     name: 'sleep',
-    icon: 'sleep.png'
+    icon: 'sleep.png',
+    path: 'night'
   },
   {
     name: 'wakeup',
-    icon: 'wakeup.png'
+    icon: 'wakeup.png',
+    path: 'home'
   },
   {
     name: 'play',
