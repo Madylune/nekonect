@@ -15,7 +15,7 @@ const StyledDiv = styled.div`
   img.pushennGif {
     width: 167px;
     position: absolute;
-    bottom: -436%;
+    bottom: -552%;
     right: 13%;
     height: auto;
     transition: .3s ease-in-out;
