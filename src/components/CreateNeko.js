@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { db } from '../api/firebase'
 import { NEKO_CREATE_SUCCESS } from '../reducers/neko'
+import { withRouter } from 'react-router'
+import get from 'lodash/get'
+import isEmpty from 'lodash/isEmpty'
 
 const StyledCreateNeko = styled.div`
   display: flex;
@@ -91,10 +94,17 @@ class CreateNeko extends Component {
         sexe: sexe
       })
       .then(() => {
-        this.props.createNeko({
-          name,
-          birthdate: new Date(),
-          sexe
+        db.collection('neko')
+        .get()
+        .then(querySnapshot => {
+          const data = querySnapshot.docs.map(doc => doc.data())
+          const id = querySnapshot.docs.map(doc => doc.id)
+          !isEmpty(data) && this.props.createNeko({
+            name: get(data, ['0', 'name']),
+            birthdate: get(data, ['0', 'birthdate']),
+            sexe: get(data, ['0', 'sexe']),
+            id: id[0]
+          })
         })
       })
       .catch(error => {
@@ -164,7 +174,7 @@ class CreateNeko extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createNeko: ({ name, sexe, birthdate }) => dispatch({ type: NEKO_CREATE_SUCCESS, payload: { name, sexe, birthdate } })
+  createNeko: ({ name, sexe, birthdate, id }) => dispatch({ type: NEKO_CREATE_SUCCESS, payload: { name, sexe, birthdate, id } })
 })
 
-export default connect(null, mapDispatchToProps)(CreateNeko)
+export default withRouter(connect(null, mapDispatchToProps)(CreateNeko))
