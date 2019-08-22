@@ -51,6 +51,8 @@ class Thermometer extends Component {
   }
 
   handleChange = event => {
+    var sound = document.querySelector('.soundShower');
+    sound.play();
     const { temperature } = this.state
     this.setState({
       temperature: event.target.value
@@ -68,6 +70,9 @@ class Thermometer extends Component {
     const { temperature } = this.state
     return (
       <StyledThermometer>
+        <audio className="soundShower" 
+          src={require(`../../sound/soundShower.mp3`)} >
+        </audio>
         <input 
           className="Slider" 
           type="range" 
