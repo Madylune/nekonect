@@ -15,7 +15,7 @@ const StyledApp = styled.div`
   overflow: hidden;
 `
 
-const App = ({ isDead, neko = true }) => (
+const App = ({ isDead, neko }) => (
   <StyledApp>
     {!neko ? (
       <CreateNeko />
