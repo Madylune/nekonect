@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { db } from '../api/firebase'
+import { NEKO_CREATE_SUCCESS } from '../reducers/neko'
 
 const StyledCreateNeko = styled.div`
   display: flex;
@@ -89,7 +91,11 @@ class CreateNeko extends Component {
         sexe: sexe
       })
       .then(() => {
-        // window.location = "/"
+        this.props.createNeko({
+          name,
+          birthdate: new Date(),
+          sexe
+        })
       })
       .catch(error => {
         this.setState({ isSubmitting: false })
@@ -103,7 +109,6 @@ class CreateNeko extends Component {
 
   render() {
     const { name, sexe, isSubmitting } = this.state
-    // console.log('debug db', db)
     return (
       <StyledCreateNeko>
         <img src={require('../img/logo_neko_nect.jpg')} className="Logo" alt="logo" />
@@ -158,4 +163,8 @@ class CreateNeko extends Component {
   }
 }
 
-export default CreateNeko
+const mapDispatchToProps = dispatch => ({
+  createNeko: ({ name, sexe, birthdate }) => dispatch({ type: NEKO_CREATE_SUCCESS, payload: { name, sexe, birthdate } })
+})
+
+export default connect(null, mapDispatchToProps)(CreateNeko)
