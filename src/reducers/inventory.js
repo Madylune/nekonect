@@ -1,6 +1,8 @@
 import get from 'lodash/get'
+import filter from 'lodash/filter'
 
 export const INVENTORY_ADD = 'inventory.add'
+export const INVENTORY_REMOVE = 'inventory.remove'
 
 const initialState = {
   items: []
@@ -13,6 +15,12 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         items: state.items
+      }
+    case INVENTORY_REMOVE:
+      let removedItem = get(payload, 'removedItem')
+      return {
+        ...state,
+        items: filter(state.items, item => item.name !== removedItem.name)
       }
     default:
       return state

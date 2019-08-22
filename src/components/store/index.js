@@ -2,9 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import map from 'lodash/map'
+import get from 'lodash/get'
 import random from 'lodash/random'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import { INVENTORY_ADD } from '../../reducers/inventory'
+import { INVENTORY_REMOVE } from '../../reducers/inventory'
+import { STORE_REMOVE } from '../../reducers/store'
+import { STORE_ADD } from '../../reducers/store'
 
 const StyledStore = styled.div`
   background: url(${require('../../img/backgrounds/store.png')});
@@ -44,17 +48,8 @@ const StyledStore = styled.div`
     50% { top: 0px; }
     75% { top: -5px; }
     100% { top: 0px; }
-
   }
-
 `
-const items = [
-  {
-    name: "tv",
-    icon: "tv.png",
-  },
-]
-
 class Store extends Component {
   timeout = null   
   state = {
@@ -73,7 +68,9 @@ class Store extends Component {
     }, 5000)
 
     this.props.makeHappy(random(20, 25))
-    this.props.addToInventory(items[i]);
+    this.props.addToInventory(this.props.items[i])
+    this.props.removeFromStore(this.props.items[i])
+    
   }
 
   componentWillUnmount() {
@@ -82,6 +79,7 @@ class Store extends Component {
 
   render() {
     const { animateItem } = this.state
+    const { items } = this.props
     return (
       <StyledStore>
           <div className="Icon-store">
@@ -103,6 +101,13 @@ class Store extends Component {
 const mapDispatchToProps = dispatch => ({
   makeHappy: val => dispatch({ type: MOOD_CHANGED_HAPPY, payload: { makeHappyVal: val } }),
   addToInventory: item => dispatch({ type: INVENTORY_ADD, payload: { addedItem: item } }),
+  removeFromInventory: item => dispatch({ type: INVENTORY_REMOVE, payload: { removedItem: item } }),
+  addToStore: item => dispatch({ type: STORE_ADD, payload: { addedItem: item } }),
+  removeFromStore: item => dispatch({ type: STORE_REMOVE, payload: { removedItem: item } }),
 })
 
-export default connect(null, mapDispatchToProps)(Store)
+const mapStateToProps = state => ({
+  items: get(state, ['store', 'items'] )
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Store)
