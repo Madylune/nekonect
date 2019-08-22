@@ -26,15 +26,16 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({ isLoading: true })
-
     db.collection('neko')
     .get()
     .then(querySnapshot => {
       const data = querySnapshot.docs.map(doc => doc.data())
-      this.props.createNeko({
+      const id = querySnapshot.docs.map(doc => doc.id)
+      !isEmpty(data) && this.props.createNeko({
         name: get(data, ['0', 'name']),
         birthdate: get(data, ['0', 'birthdate']),
-        sexe: get(data, ['0', 'sexe'])
+        sexe: get(data, ['0', 'sexe']),
+        id: id[0]
       })
       this.setState({ isLoading: false })
     })
@@ -65,7 +66,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  createNeko: ({ name, sexe, birthdate }) => dispatch({ type: NEKO_CREATE_SUCCESS, payload: { name, sexe, birthdate } })
+  createNeko: ({ name, sexe, birthdate, id }) => dispatch({ type: NEKO_CREATE_SUCCESS, payload: { name, sexe, birthdate, id } })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

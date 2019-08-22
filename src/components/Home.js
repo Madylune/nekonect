@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 import get from 'lodash/get'
+import random from 'lodash/random'
 import { Switch, Route } from 'react-router-dom'
 import { getPath } from '../routes'
 import Sidebar from './sidebar'
@@ -14,6 +16,7 @@ import { withRouter } from 'react-router'
 import Kitchen from './Kitchen'
 import Night from './night'
 import Settings from './settings'
+import { MOOD_CHANGE, MOOD_CHANGED_LIFE } from '../reducers/mood'
 
 const StyledHome = styled.div`
   margin: 0;
@@ -64,27 +67,41 @@ const StyledBody = styled.div`
   }
 `
 
-const Home = ({ history }) => {
-  const location = get(history, ['location', 'pathname'])
-  return (
-    <StyledHome>
-      <Header user={true} />
-      <StyledBody user={true} location={location}>
-        <Sidebar location={location} />
-          <Switch>
-            <Route exact={true} path={getPath('kitchen')} component={Kitchen} />
-            <Route exact={true} path={getPath('toilet')} component={Toilet} />
-            <Route exact={true} path={getPath('bathroom')} component={Shower} />
-            <Route exact={true} path={getPath('garden')} component={Garden} />
-            <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} />
-            <Route exact={true} path={getPath('night')} component={Night} />
-            <Route exact={true} path={getPath('settings')} component={Settings} />
-          </Switch>
-        {location === getPath('home') && <img src={require('../img/push-hello.png')} className="Neko" alt="Neko" />}
-      </StyledBody>
-      <Footer />
-    </StyledHome>
-  )
+const RANDOM_VALUE = random(50, 100)
+
+class Home extends Component {
+  componentDidMount() {
+    const { moodChange, rebornCat } = this.props
+    rebornCat() && moodChange(RANDOM_VALUE)
+  }
+  render() {
+    const { history } = this.props
+    const location = get(history, ['location', 'pathname'])
+    return (
+      <StyledHome>
+        <Header user={true} />
+        <StyledBody user={true} location={location}>
+          <Sidebar location={location} />
+            <Switch>
+              <Route exact={true} path={getPath('kitchen')} component={Kitchen} />
+              <Route exact={true} path={getPath('toilet')} component={Toilet} />
+              <Route exact={true} path={getPath('bathroom')} component={Shower} />
+              <Route exact={true} path={getPath('garden')} component={Garden} />
+              <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} />
+              <Route exact={true} path={getPath('night')} component={Night} />
+              <Route exact={true} path={getPath('settings')} component={Settings} />
+            </Switch>
+          {location === getPath('home') && <img src={require('../img/push-hello.png')} className="Neko" alt="Neko" />}
+        </StyledBody>
+        <Footer />
+      </StyledHome>
+    )
+  }
 }
 
-export default withRouter(Home)
+const mapDispatchToProps = dispatch => ({
+  moodChange: val => dispatch({ type: MOOD_CHANGE, payload: { value: val } }),
+  rebornCat: () => dispatch({ type: MOOD_CHANGED_LIFE, payload: { isDead: false } })
+})
+
+export default withRouter(connect(null, mapDispatchToProps)(Home))
