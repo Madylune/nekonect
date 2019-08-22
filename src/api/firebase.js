@@ -8,7 +8,7 @@ export const FIREBASE_CONFIG = {
   authDomain: "nekonect-1fe84.firebaseapp.com",
   databaseURL: "https://nekonect-1fe84.firebaseio.com",
   projectId: "nekonect-1fe84",
-  storageBucket: "",
+  storageBucket: "nekonect-1fe84.appspot.com",
   messagingSenderId: "1087194634224"
 }
 firebase.initializeApp(FIREBASE_CONFIG)
