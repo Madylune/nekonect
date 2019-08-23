@@ -5,6 +5,7 @@ import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import { TIME_CHANGE_TO_NIGHT } from '../../reducers/time'
 import random from 'lodash/random'
 import get from 'lodash/get'
+import AutoPlayAudio from '../AutoPlayAudio'
 
 const StyledNight = styled.div`
   .Neko_night {
@@ -18,21 +19,17 @@ const StyledNight = styled.div`
 class Night extends Component {
   interval = null
 
-  
-
   componentDidMount() {
-    this.props.chanteToNight(true)
+    this.props.changeToNight(true)
     this.interval = setInterval(
       () => this.tick(),
       1000
     )
-    var test = document.querySelector('.soundNight');
-    test.play();
   }
 
-  componentWillUnmount() {
+  componentWillUnmount() {  
     clearInterval(this.interval)
-    this.props.chanteToNight(false)
+    this.props.changeToNight(false)
   }
 
   tick() {
@@ -43,9 +40,7 @@ class Night extends Component {
   render() {
     return (
       <StyledNight>
-      <audio className="soundNight" 
-        src={require(`../../sound/soundNight.mp3`)} >
-      </audio>
+      <AutoPlayAudio src={require(`../../sound/soundNight.mp3`)} />
         <img 
           src={require('../../img/neko_dodo.png')} 
           className="Neko_night" 
@@ -61,7 +56,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  chanteToNight: val => dispatch({ type: TIME_CHANGE_TO_NIGHT, payload: { timeIsNight: val } }),
+  changeToNight: val => dispatch({ type: TIME_CHANGE_TO_NIGHT, payload: { timeIsNight: val } }),
   makeHappy: val => dispatch({ type: MOOD_CHANGED_HAPPY, payload: { makeHappyVal: val } })
 })
 

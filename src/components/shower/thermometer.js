@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
@@ -46,13 +46,13 @@ const StyledThermometer = styled.div`
 `
 
 class Thermometer extends Component {
+  audioRef = createRef()
   state = {
     temperature: 50
   }
 
   handleChange = event => {
-    var sound = document.querySelector('.soundShower');
-    sound.play();
+    this.audioRef.current.play()
     const { temperature } = this.state
     this.setState({
       temperature: event.target.value
@@ -70,8 +70,9 @@ class Thermometer extends Component {
     const { temperature } = this.state
     return (
       <StyledThermometer>
-        <audio className="soundShower" 
-          src={require(`../../sound/soundShower.mp3`)} >
+        <audio 
+          ref={this.audioRef}
+          src={require(`../../sound/soundShower.mp3`)}>
         </audio>
         <input 
           className="Slider" 
