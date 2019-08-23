@@ -14,6 +14,8 @@ const StyledHeader = styled.header`
   text-align: center;
   margin: 10px 5px;
   font-family: 'Raleway', sans-serif;
+  height: 50px;
+  
   .Neko_infos_life {
     display: flex;
     flex-direction: column;

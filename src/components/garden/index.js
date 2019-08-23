@@ -1,62 +1,82 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
-import { motion, useSpring } from 'framer-motion'
 import random from 'lodash/random'
 import AutoPlayAudio from '../AutoPlayAudio'
+import ZingTouch from 'zingtouch'
 
 const StyledGarden = styled.div`
-  .Neko_garden {
-    height: 100px;
-    position: absolute;
-    top: 35%;
-    left: 45%;
-  }
-  .Football {
-    height: 90px;
-    position: absolute;
-    transition: 0.7s;
+  height: 100%;
+  overflow: hidden;
+
+  .Play_area {
+    height: 500px;
+    width: 90%;
+    margin-left: 50px;
+
+    .Neko_garden {
+      height: 100px;
+      position: absolute;
+      top: 35%;
+      left: 45%;
+    }
+    .Football {
+      height: 80px;
+      width: 80px;
+      transition: 2s;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
   }
 `
 
+class Garden extends Component { 
+  playAreaRef = React.createRef()
+  ballRef = React.createRef()
+  
+  componentDidMount() {
+    this.initZingTouch()
+  }
 
-const Garden = ({ makeHappy }) => { 
-  const dampedX = useSpring(0)
-  const dampedY = useSpring(0)
-  return (
-    <StyledGarden>
-      <AutoPlayAudio src={require(`../../sound/airJeu.mp3`)} />
-      <img 
-        src={require('../../img/gif/faim.gif')} 
-        className="Neko_garden" 
-        alt="Neko" 
-      />
-      <motion.img 
-        src={require('../../img/football.png')} 
-        className="Football" 
-        alt="Ballon de football" 
-        onClick={() => makeHappy(random(30, 50))} 
-        onDrag={() => makeHappy(random(1, 3))}
-        drag
-        dragMomentum={false}
-        dragConstraints={{
-          top: -100,
-          left: -50,
-          right: 50,
-          bottom: 0,
-        }}
-        initial={{
-          bottom: 0,
-          left: '40%'
-        }}
-        style={{
-          x: dampedX,
-          y: dampedY
-        }}
-      />
-    </StyledGarden>
-  )
+  initZingTouch = () => {
+    const dragArea = this.playAreaRef.current
+    const dragItem = this.ballRef.current
+    const controlRegion = new ZingTouch.Region(dragArea)
+
+    controlRegion.bind(dragItem, 'pan', (e) => {
+      const event = e.detail.events[0]
+      dragItem.style.transform = 'translate(' + (event.x - 40) + 'px, ' + (event.y - 40) + 'px)'
+    })
+  }
+  render() { 
+    const { makeHappy } = this.props
+    return (
+      <StyledGarden>
+        <div className="Play_area" ref={this.playAreaRef}>
+          <AutoPlayAudio src={require(`../../sound/airJeu.mp3`)} />
+          <img 
+            src={require('../../img/gif/faim.gif')} 
+            className="Neko_garden" 
+            alt="Neko" 
+          />
+          <div
+            ref={this.ballRef}
+            className="Football" 
+            onClick={() => makeHappy(random(30, 50))} 
+            style={{ transform: 'translate(50px, 400px)' }}>
+            <img
+              src={require('../../img/football.png')} 
+              alt="Ballon de football" 
+            />
+          </div>
+        </div>
+      </StyledGarden>
+    )
+  }
 }
 
 
