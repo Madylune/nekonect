@@ -5,11 +5,10 @@ import sound from '../../img/icons/speaker.png'
 import papatte from '../../img/backgrounds/papatte.png'
 
 const StyledSettingsGlobal = styled.div`
-  height: 100%;
+  margin-top: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f9f9f9;
 
   .papatte {
     position: absolute; 
@@ -21,6 +20,7 @@ const StyledSettingsGlobal = styled.div`
 
 const StyledSettings = styled.div` 
   margin-left: 46px;
+  z-index: 1;
 `
 const StyledText = styled.h1`
   color:#726266;
@@ -44,7 +44,6 @@ const StyledImg = styled.div`
     border-radius: 5px;   
     background: #b4a89c;
     outline: none;
-    opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
   }
@@ -70,15 +69,17 @@ const StyledButton = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 50px;
+
   .button {
-    width: 30px;
-    width: 13rem;
+    width: 250px;
+    height: 35px;
     margin-top: 10px;
     background-color: #EDCCD3;
     color: white;
     border: 1.5px solid #b4a89c;
     border-radius: 45px;
-    height: 30px;
+    font-size: 15px;
   }
 `
 
@@ -95,8 +96,8 @@ const Settings = () => (
           max="50" min="0" step="0.01" />
       </StyledImg>
       <StyledButton>
-        <input type="button" value="Condition général" className="button"></input>
-        <input type="button" value="Reset la partie" className="button"></input>
+        <input type="button" value="Conditions générales" className="button"></input>
+        <input type="button" value="Réinitialiser" className="button"></input>
       </StyledButton>
     </StyledSettings>
   </StyledSettingsGlobal>

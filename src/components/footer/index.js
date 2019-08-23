@@ -4,14 +4,14 @@ import { getPath } from '../../routes'
 import { Link } from 'react-router-dom'
 
 const StyledFooter = styled.div`
-  padding: 5px;
+  padding: 8px;
   background-color: #fff;
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   .Icon {
-    height: 60px;
+    height: 50px;
     cursor: pointer;
   }
 `

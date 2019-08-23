@@ -54,10 +54,11 @@ const StyledBody = styled.div`
   text-align: center;
   height: 100%;
   position: relative;
-  background-image: ${props => props.user && getBodyBg(props.location)};
+  background-image: ${props => getBodyBg(props.location)};
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: center;
+  background-color: ${props => props.location === getPath('settings') ? '#efefef' : ''};
 
   .Neko {
     height: 200px;
@@ -79,8 +80,8 @@ class Home extends Component {
     const location = get(history, ['location', 'pathname'])
     return (
       <StyledHome>
-        <Header user={true} />
-        <StyledBody user={true} location={location}>
+        <Header />
+        <StyledBody location={location}>
           <Sidebar location={location} />
             <Switch>
               <Route exact={true} path={getPath('kitchen')} component={Kitchen} />
