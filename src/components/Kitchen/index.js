@@ -6,12 +6,6 @@ import random from 'lodash/random'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 
 const StyledKitchen = styled.div`
-  background: url(${require('../../img/neko_nect_cuisine.jpg')});
-  background-size: cover;
-  background-position: center;
-  text-align: center;
-  height: 77vh;
-
   .Icon-kitchen {
     background: #ffffff99;
     padding: 15px 20px;
