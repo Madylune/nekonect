@@ -24,7 +24,7 @@ const StyledSidebar = styled.div`
 
 const StyledButton = styled.div`
   margin: 5px;
-  cursor: ${props => props.isNight ? 'pointer' : 'not-allowed'};
+  cursor: ${props => props.isNight ? 'not-allowed' : 'pointer'};
   opacity: ${props => props.isNight || props.wakeupIcon ? '0.3' : '1'};
   img {
     height: 25px;

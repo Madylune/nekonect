@@ -104,8 +104,8 @@ class Dancefloor extends Component {
     )
 
     // Activer le lecteur audio choisie
-    var test = document.querySelector(`.${musics[value].name}`);
-    test.play();
+    var sound = document.querySelector(`.${musics[value].name}`);
+    sound.play();
 
     // Animer le pusheen
     this.setState({
@@ -130,7 +130,8 @@ class Dancefloor extends Component {
           {map(musics, (music, i) =>
             <div key={i} className="Icon-Music-Img">
               <img src={require(`../../img/icons/${music.icon}`)} id={music.name} className={`Icon-${music.name}`} alt={`${music.name}`} onClick={() => this.dance(i)} />
-              <audio className={music.name}
+              <audio 
+                className={music.name}
                 src={require(`../../sound/${music.music}`)}>
               </audio>
             </div>
