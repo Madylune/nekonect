@@ -51,8 +51,9 @@ const getBodyBg = location => {
 }
 
 const StyledBody = styled.div`
+  flex-grow: 1;
+  /* height: 100%; */
   text-align: center;
-  height: 100%;
   position: relative;
   background-image: ${props => getBodyBg(props.location)};
   background-repeat: no-repeat;
