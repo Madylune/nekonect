@@ -45,7 +45,7 @@ const Header = ({ neko }) => {
   const from = get(neko, 'birthdate').toDate()
   const now = new Date()
   const age = timeDifference(from, now)
-  const { days, hours, minutes, seconds } = age
+  const { days, hours, minutes } = age
   return (
     <StyledHeader className="App-header">
       <div className="Neko_infos">
@@ -57,7 +57,7 @@ const Header = ({ neko }) => {
       <div className="Neko_infos_life">
         <MoodBar age={age} />
         <div className="Neko_age">
-          {days} jour{getPlural(days, 1, 's')}, {hours} h, {minutes} min, {seconds} sec
+          {days} jour{getPlural(days, 1, 's')}, {hours} h et {minutes} min
         </div>
       </div>
       <Clock />
