@@ -18,12 +18,16 @@ const StyledNight = styled.div`
 class Night extends Component {
   interval = null
 
+  
+
   componentDidMount() {
     this.props.chanteToNight(true)
     this.interval = setInterval(
       () => this.tick(),
       1000
     )
+    var test = document.querySelector('.soundNight');
+    test.play();
   }
 
   componentWillUnmount() {
@@ -39,6 +43,9 @@ class Night extends Component {
   render() {
     return (
       <StyledNight>
+      <audio className="soundNight" 
+        src={require(`../../sound/soundNight.mp3`)} >
+      </audio>
         <img 
           src={require('../../img/neko_dodo.png')} 
           className="Neko_night" 

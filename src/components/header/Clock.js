@@ -3,10 +3,12 @@ import styled from 'styled-components'
 import { getTime } from '../../utils/time'
 
 const StyledClock = styled.div`
-  display: ${props => props.visible ? 'block' : 'none'};
+  display: block;
   font-weight: bold;
-  font-size: 22px;
-  margin-right: 5px;
+  font-size: 20px;
+  margin-top: 3px;
+  font-family: 'Raleway', sans-serif;
+  letter-spacing: 1px;
 `
 
 class Clock extends Component {
@@ -28,10 +30,9 @@ class Clock extends Component {
     })
   }
   render() {
-    const { visible } = this.props
     const { time } = this.state
     return (
-      <StyledClock visible={visible}>
+      <StyledClock>
         {time}
       </StyledClock>
     )

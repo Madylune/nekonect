@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import random from 'lodash/random'
-import { MOOD_CHANGE, MOOD_CHANGED_LIFE } from '../reducers/mood'
+import get from 'lodash/get'
+import { NEKO_DELETE_SUCCESS } from '../reducers/neko'
+import { db } from '../api/firebase'
+import { getPath } from '../routes'
+import { withRouter } from 'react-router'
 
 const StyledGameOver = styled.div`
   background-color: #ffffff;
@@ -28,13 +31,23 @@ const StyledGameOver = styled.div`
   }
 `
 
-const RANDOM_VALUE = random(50, 100)
-
 class GameOver extends Component {
   playAgain = () => {
-    const { moodChange, rebornCat } = this.props
-    rebornCat() && moodChange(RANDOM_VALUE)
+    this.deleteNeko()
   }
+
+  deleteNeko = () => {
+    const { neko, deleteCat, history } = this.props
+    const location = get(history, ['location', 'pathname'])
+
+    db.collection('neko').doc(neko.id).delete().then(() => {
+      deleteCat()
+      location === getPath('home') ? document.location.reload(true) : document.location.replace(getPath('home'))
+    }).catch(function(error) {
+      console.error("Error removing docu  ment: ", error)
+    })
+  }
+
   render() {
     return (
       <StyledGameOver>
@@ -51,9 +64,12 @@ class GameOver extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  moodChange: val => dispatch({ type: MOOD_CHANGE, payload: { value: val } }),
-  rebornCat: () => dispatch({ type: MOOD_CHANGED_LIFE, payload: { isDead: false } })
+const mapStateToProps = state => ({
+  neko: get(state, 'neko')
 })
 
-export default connect(null, mapDispatchToProps)(GameOver)
+const mapDispatchToProps = dispatch => ({
+  deleteCat: () => dispatch({ type: NEKO_DELETE_SUCCESS })
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GameOver))
