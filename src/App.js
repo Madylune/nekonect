@@ -43,7 +43,7 @@ class App extends Component {
   
   render() {
     const { isLoading } = this.state
-    const { isDead, neko } = this.props
+    const { isDead, neko, items } = this.props
     return isLoading ? ( 
       <Loader />
       ) : (
@@ -52,51 +52,8 @@ class App extends Component {
           <CreateNeko />
         ) : isDead ? (
           <GameOver />
-<<<<<<< HEAD
         ) : (
-          <Home />
-=======
-        ) : ( 
-        <>
-        <Header user={true} />
-        <StyledBody user={true} location={location}>
-        {/* {user ? ( */}
-          <>
-            <Sidebar />
-            <Switch>
-              <Route exact={true} path={getPath('kitchen')} component={Kitchen} />
-              <Route exact={true} path={getPath('toilet')} component={Toilet} />
-              <Route exact={true} path={getPath('bathroom')} component={Shower} />
-              <Route exact={true} path={getPath('garden')} component={Garden} />
-              <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} />
-              <Route exact={true} path={getPath('store')} component={Store} />
-            </Switch>
-            {/* <button onClick={signOut}>Se déconnexion</button> */}
-          </>
-        {/* ) : ( */}
-          {/* <> */}
-          {/* <Button 
-            variant="contained" 
-            size="small" 
-            className="Button Button-fb" 
-            onClick={() => signInWithFacebook()}>
-            Se connecter avec Facebook
-          </Button> */}
-          {/* <Button 
-            variant="contained" 
-            size="small" 
-            className="Button Button-google" 
-            onClick={this.signInWithGoogle}>
-            Se connecter avec Google
-          </Button>
-          </>
-        )} */}
-        {location === getPath('home') && <img src={require('./img/push-hello.png')} className="Neko" alt="Neko" />}
-        </StyledBody>
-        <Furniture items={items.filter(item => item.place === location)}/>
-        <Footer />
-        </>
->>>>>>> added animations to the store
+          <Home items={items}/>
         )}
       </StyledApp>
     )
@@ -105,7 +62,8 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   isDead: get(state, ['mood', 'isDead']),
-  neko: get(state, 'neko')
+  neko: get(state, 'neko'),
+  items: get(state, ['inventory', 'items'])
 })
 
 const mapDispatchToProps = dispatch => ({
