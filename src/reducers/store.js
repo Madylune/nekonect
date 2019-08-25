@@ -11,6 +11,11 @@ const initialState = {
     name: "tv",
     icon: "tv.png",
     place: '/'
+  },
+  {
+    name: "umbrella",
+    icon: "umbrella.png",
+    place: "/garden"
   }]
 }
 

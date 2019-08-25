@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Item from './item'
 import styled from 'styled-components'
 import map from 'lodash/map'
 import get from 'lodash/get'
@@ -26,16 +27,17 @@ const StyledStore = styled.div`
   }
 
   .Icon-tv {
-    margin-top: 10px;
+    position: absolute;
+    top: 10px;
+    left: 40%;
   }
 
-  .Neko_kitchen {
-      position: absolute;
-      width: 180px;
-      bottom: 3%;
-      right: 6%;
-    }
-  
+  .Icon-umbrella {
+    position: absolute;
+    top: 155px;
+    left: 40%
+  }
+
   .bounce {
     animation-name: bounce;
   }
@@ -48,33 +50,28 @@ const StyledStore = styled.div`
     100% {  transform: translate3d(0, 0px, 0); } 
   }
 
-  .buy-transition-leave {
+  .animation-leave {
     opacity: 1;
   }
   
-  .buy-transition-leave.buy-transition-leave-active {
-    opacity: 0;
-    transition: all 1s ease-out;
-    animation: bounce 1000ms ease-in;
+  .animation-leave.animation-leave-active {
+    opacity: 0.01;
+    transition: opacity 800ms ease-in;
+    animation: bounce 1s ease-in;
   }
 `
 class Store extends Component {
 
   buy = i => {  
     this.props.makeHappy(random(20, 25))
-    this.props.addToInventory(this.props.items[i])
     this.props.removeFromStore(this.props.items[i])
-  }
-
-  componentWillUnmount() {
-    this.timeout && clearTimeout(this.timeout)
+    this.props.addToInventory(this.props.items[i])
   }
 
   render() {
     const { items } = this.props
     const itemElements = map(items, (item, i) => 
-      <img 
-        key={i}
+      <Item key={item.name}
         src={require(`../../img/icons/${item.icon}`)} 
         id={item.name} className={`Icon-${item.name}`} 
         alt={`${item.name}`} 
@@ -82,15 +79,15 @@ class Store extends Component {
     )
     return (
       <StyledStore>
-          <div className="Icon-store">
-            <CSSTransitionGroup
-              transitionName="buy-transition"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={1000}>
-              {itemElements}
-            </CSSTransitionGroup>                  
-          </div>       
-          <img src={require('../../img/gif/faim.gif')} className="Neko_kitchen" alt="Gif de Pusheen qui a faim" />
+        <div className="Icon-store">
+          <CSSTransitionGroup
+            transitionName="animation"
+            transitionEnterTimeout={0}
+            transitionLeaveTimeout={800}>
+
+            {itemElements}
+          </CSSTransitionGroup>
+        </div>       
       </StyledStore>
     )
   }

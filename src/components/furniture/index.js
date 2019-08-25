@@ -3,17 +3,22 @@ import styled from 'styled-components'
 import map from 'lodash/map'
 
 const StyledFurniture = styled.div`
-  .Icon-furniture {
-    img {
-      width: 90px;
-      height: 82px;
-    }
-  }
-
+ 
   .Icon-tv {
     position: absolute;
+    width: 90px;
+    height: 82px;
     top: 142px;
     right: 73px;
+  }
+
+  .Icon-umbrella {
+    position: absolute;
+    width: 125px;
+    height: 119px;
+    top: 292px;
+    right: 9px;
+    transform: rotate(-12deg);
   }
 `
 function Furniture(props) {
