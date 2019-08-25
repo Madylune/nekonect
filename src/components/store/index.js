@@ -11,7 +11,6 @@ import { INVENTORY_ADD } from "../../reducers/inventory";
 import { INVENTORY_REMOVE } from "../../reducers/inventory";
 import { STORE_REMOVE } from "../../reducers/store";
 import { STORE_ADD } from "../../reducers/store";
-import { element } from "prop-types";
 
 const StyledStore = styled.div`
   background: url(${require("../../img/backgrounds/store.png")});
@@ -29,13 +28,13 @@ const StyledStore = styled.div`
 
   .Icon-tv {
     position: absolute;
-    top: 10px;
+    top: 12px;
     left: 40%;
   }
 
   .Icon-umbrella {
     position: absolute;
-    top: 155px;
+    top: 162px;
     left: 40%;
   }
 
@@ -77,11 +76,11 @@ class Store extends Component {
     this.props.removeFromStore(this.props.items[i]);
     this.props.addToInventory(this.props.items[i]);
   };
-  
+
   playAudio = () => {
-    let audio = document.querySelector('#store-audio')
+    let audio = document.querySelector("#store-audio");
     audio.play();
-  }
+  };
 
   render() {
     const { items } = this.props;
@@ -108,9 +107,7 @@ class Store extends Component {
           >
             {itemElements}
           </CSSTransitionGroup>
-          <audio id='store-audio'
-                src={require(`../../sound/buy.mp3`)}>
-          </audio>
+          <audio id="store-audio" src={require(`../../sound/buy.mp3`)}></audio>
         </div>
       </StyledStore>
     );
