@@ -4,13 +4,15 @@ import time from './time'
 import neko from './neko'
 import store from './store'
 import inventory from './inventory'
+import code from './code'
 
 const reducers = combineReducers({
   mood,
   time,
   neko,
   store,
-  inventory
+  inventory,
+  code
 })
 
 export default reducers
