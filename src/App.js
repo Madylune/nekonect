@@ -43,7 +43,7 @@ class App extends Component {
   
   render() {
     const { isLoading } = this.state
-    const { isDead, neko } = this.props
+    const { isDead, neko, items } = this.props
     return isLoading ? ( 
       <Loader />
       ) : (
@@ -53,7 +53,7 @@ class App extends Component {
         ) : isDead ? (
           <GameOver />
         ) : (
-          <Home />
+          <Home items={items}/>
         )}
       </StyledApp>
     )
@@ -62,7 +62,8 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   isDead: get(state, ['mood', 'isDead']),
-  neko: get(state, 'neko')
+  neko: get(state, 'neko'),
+  items: get(state, ['inventory', 'items'])
 })
 
 const mapDispatchToProps = dispatch => ({

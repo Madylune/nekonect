@@ -16,6 +16,8 @@ import { withRouter } from 'react-router'
 import Kitchen from './Kitchen'
 import Night from './night'
 import Settings from './settings'
+import Furniture from './furniture'
+import Store from './store'
 import { MOOD_CHANGE, MOOD_CHANGED_LIFE } from '../reducers/mood'
 
 const StyledHome = styled.div`
@@ -43,6 +45,8 @@ const getBodyBg = location => {
       return `url(${require('../img/backgrounds/garden.jpg')})`
     case location === getPath('dancefloor'):
       return `url(${require('../img/backgrounds/dancefloor.jpg')})`
+    case location === getPath('store'):
+      return `url(${require('../img/backgrounds/store.png')})`
     case location === getPath('night'):
       return `url(${require('../img/backgrounds/night.jpg')})`
     default:
@@ -77,7 +81,7 @@ class Home extends Component {
     rebornCat() && moodChange(RANDOM_VALUE)
   }
   render() {
-    const { history } = this.props
+    const { history, items } = this.props
     const location = get(history, ['location', 'pathname'])
     return (
       <StyledHome>
@@ -92,9 +96,11 @@ class Home extends Component {
               <Route exact={true} path={getPath('dancefloor')} component={Dancefloor} />
               <Route exact={true} path={getPath('night')} component={Night} />
               <Route exact={true} path={getPath('settings')} component={Settings} />
+              <Route exact={true} path={getPath('store')} component={Store} />
             </Switch>
           {location === getPath('home') && <img src={require('../img/push-hello.png')} className="Neko" alt="Neko" />}
         </StyledBody>
+        <Furniture items={items.filter(item => item.place === location)}/>
         <Footer />
       </StyledHome>
     )
