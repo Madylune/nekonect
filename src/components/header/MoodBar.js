@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import random from 'lodash/random'
 import get from 'lodash/get'
-import { MOOD_CHANGE, MOOD_CHANGED_LIFE, MOOD_IS_MAX } from '../../reducers/mood'
+import { MOOD_CHANGE, MOOD_CHANGED_LIFE } from '../../reducers/mood'
 
 const StyledMoodBar = styled.div`
   border: 1px solid #cecece;
@@ -33,7 +33,7 @@ class MoodBar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { moodValue, makeHappyVal, isNight, changeMoodMax, moodChange } = this.props
+    const { moodValue, makeHappyVal, moodChange } = this.props
     const { value } = this.state
     if (prevProps.moodValue !== moodValue) {
       this.initMoodValue()
@@ -43,14 +43,9 @@ class MoodBar extends Component {
       this.setState({
         value: this.state.value + makeHappyVal
       })
+      // Put mood value into the store each time it changes
       moodChange(this.state.value + makeHappyVal)
     }
-    if (prevProps.isNight !== isNight) {
-      isNight ? this.stopTicking() : this.startTicking()
-    }
-    if (value >= 100) {
-      changeMoodMax(true)
-    } 
   }
   
   componentWillUnmount() {
@@ -78,16 +73,23 @@ class MoodBar extends Component {
 
   tick = async () => {
     const { value } = this.state
-    if (value >= 0) {
-      this.setState({
-        value: value - 1
-      })
-    }
-    if (value <= 0) {
-      clearInterval(this.intervalID)
-      this.props.killCat()
+    const { isNight } = this.props
+    if (isNight && value <= 100) {
+      this.incrementMood(value)
+    } else {
+      if (value >= 0) {
+        this.decrementMood(value)
+      }
+      if (value <= 0) {
+        clearInterval(this.intervalID)
+        this.props.killCat()
+      }
     }
   }
+
+  incrementMood = value => this.setState({ value: value + 1 })
+
+  decrementMood = value => this.setState({ value: value - 1 })
 
   render() {
     const { value } = this.state
@@ -112,8 +114,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   moodChange: val => dispatch({ type: MOOD_CHANGE, payload: { value: val } }),
-  killCat: () => dispatch({ type: MOOD_CHANGED_LIFE, payload: { isDead: true } }),
-  changeMoodMax: val => dispatch({ type: MOOD_IS_MAX, payload: { value: val } })
+  killCat: () => dispatch({ type: MOOD_CHANGED_LIFE, payload: { isDead: true } })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoodBar)

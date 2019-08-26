@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import { TIME_CHANGE_TO_NIGHT } from '../../reducers/time'
-import random from 'lodash/random'
-import get from 'lodash/get'
 import AutoPlayAudio from '../AutoPlayAudio'
 
 const StyledNight = styled.div`
@@ -17,24 +14,12 @@ const StyledNight = styled.div`
 `
 
 class Night extends Component {
-  interval = null
-
   componentDidMount() {
     this.props.changeToNight(true)
-    this.interval = setInterval(
-      () => this.tick(),
-      1000
-    )
   }
 
   componentWillUnmount() {  
-    clearInterval(this.interval)
     this.props.changeToNight(false)
-  }
-
-  tick() {
-    const { moodIsMax, makeHappy } = this.props
-    !moodIsMax && makeHappy(random(0,2))
   }
 
   render() {
@@ -51,13 +36,8 @@ class Night extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  moodIsMax: get(state, ['mood', 'moodIsMax'])
-})
-
 const mapDispatchToProps = dispatch => ({
-  changeToNight: val => dispatch({ type: TIME_CHANGE_TO_NIGHT, payload: { timeIsNight: val } }),
-  makeHappy: val => dispatch({ type: MOOD_CHANGED_HAPPY, payload: { makeHappyVal: val } })
+  changeToNight: val => dispatch({ type: TIME_CHANGE_TO_NIGHT, payload: { timeIsNight: val } })
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Night)
+export default connect(null, mapDispatchToProps)(Night)
