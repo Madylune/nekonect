@@ -10,6 +10,7 @@ import Home from './components/Home'
 import Loader from './components/Loader'
 import { db } from './api/firebase'
 import { NEKO_CREATE_SUCCESS } from './reducers/neko'
+import { CODE_LOAD_SUCCESS } from './reducers/code'
 
 const StyledApp = styled.div`
   margin: 0;
@@ -26,6 +27,7 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({ isLoading: true })
+    // Load an existing Neko
     db.collection('neko')
     .get()
     .then(querySnapshot => {
@@ -38,6 +40,15 @@ class App extends Component {
         id: id[0]
       })
       this.setState({ isLoading: false })
+    })
+
+    // Load access code
+    db.collection('code')
+    .get()
+    .then(querySnapshot => {
+      const data = querySnapshot.docs.map(doc => doc.data())
+      const id = querySnapshot.docs.map(doc => doc.id)
+      !isEmpty(data) && this.props.loadCodeId(id[0])
     })
   }
   
@@ -67,7 +78,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  createNeko: ({ name, sexe, birthdate, id }) => dispatch({ type: NEKO_CREATE_SUCCESS, payload: { name, sexe, birthdate, id } })
+  createNeko: ({ name, sexe, birthdate, id }) => dispatch({ type: NEKO_CREATE_SUCCESS, payload: { name, sexe, birthdate, id } }),
+  loadCodeId: id => dispatch({ type: CODE_LOAD_SUCCESS, payload: { id } })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

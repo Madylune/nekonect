@@ -14,6 +14,18 @@ const StyledSettingsGlobal = styled.div`
   justify-content: center;
   align-items: center;
 
+  .Code {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    color:#726266;
+    .Label {
+      text-transform: uppercase;
+    }
+  }
+
   .papatte {
     position: absolute; 
     width: 339px;
@@ -30,7 +42,11 @@ const StyledText = styled.h1`
   color:#726266;
   font-family: 'Raleway', sans-serif;
   font-size: 1em;
-
+  text-align: left;
+  margin-left: 40px;
+  .Label {
+    text-transform: uppercase;
+  }
 `
 
 const StyledImg = styled.div`
@@ -107,18 +123,19 @@ class Settings extends Component {
   }
   render() {
     const { now } = this.state
-    const { neko } = this.props
+    const { neko, fbCode } = this.props
     const from = get(neko, 'birthdate').toDate()
     const age = timeDifference(from, now)
     const { days, hours, minutes } = age
 
     return (
       <StyledSettingsGlobal>
+      <div className="Code"><span className="Label">Code de ta peluche: </span>{fbCode}</div>
         <img src={papatte} className="papatte" alt="Patte de chat" />
         <StyledSettings>
-          <StyledText>Nom : {get(neko, 'name', 'Neko')}</StyledText>
-          <StyledText>Age : {days} jour{getPlural(days, 1, 's')}, {hours} h et {minutes} min</StyledText>
-          <StyledText>Sexe : {get(neko, 'sexe') === 'male' ? 'Masculin' : 'Féminin'}</StyledText>
+          <StyledText><span className="Label">Nom : </span>{get(neko, 'name', 'Neko')}</StyledText>
+          <StyledText><span className="Label">Age : </span>{days} jour{getPlural(days, 1, 's')}, {hours} h et {minutes} min</StyledText>
+          <StyledText><span className="Label">Sexe : </span>{get(neko, 'sexe') === 'male' ? 'Masculin' : 'Féminin'}</StyledText>
           <StyledImg>
             <img src={sound} className="speaker" alt="Haut parleur" />
             <input type="range" className="slider" id="myRange"
@@ -135,7 +152,8 @@ class Settings extends Component {
 }
 
 const mapStateToProps = state => ({
-  neko: get(state, 'neko')
+  neko: get(state, 'neko'),
+  fbCode: get(state, ['code', 'id'])
 })
 
 export default connect(mapStateToProps)(Settings)

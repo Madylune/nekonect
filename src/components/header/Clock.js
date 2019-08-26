@@ -9,6 +9,7 @@ const StyledClock = styled.div`
   margin-top: 3px;
   font-family: 'Raleway', sans-serif;
   letter-spacing: 1px;
+  width: 55px;
 `
 
 class Clock extends Component {
