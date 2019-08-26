@@ -43,7 +43,7 @@ const Header = ({ neko }) => (
     <div className="Neko_infos">
       <img src={require('../../img/logo_neko_nect.jpg')} className="Logo" alt="logo" />
       <div className="Neko_name">
-        {get(neko, 'name')}
+        {get(neko, 'name', 'Neko')}
       </div>
     </div>
     <div className="Neko_infos_life">

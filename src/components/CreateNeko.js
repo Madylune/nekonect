@@ -55,6 +55,11 @@ const StyledCreateNeko = styled.div`
       }
     }
 
+    .Error {
+      color: red;
+      text-align: center;
+    }
+
     .Button_wrapper {
       width: 100%;
       text-align: center;
@@ -75,19 +80,22 @@ class CreateNeko extends Component {
     neko: undefined,
     name: '',
     sexe: '',
-    isSubmitting: false
+    isSubmitting: false,
+    error: false
   }
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      error: false
     })
   }
 
   createNeko = e => {
     const { name, sexe } = this.state
     e.preventDefault()
-    const neko = db.collection('neko')
+    if (name || sexe !== '') {
+      const neko = db.collection('neko')
       .add({
         name: name,
         birthdate: new Date(),
@@ -110,17 +118,22 @@ class CreateNeko extends Component {
       .catch(error => {
         this.setState({ isSubmitting: false })
       })
-    this.setState({
-      name: '',
-      sexe: '',
-      neko: neko
-    })
+      this.setState({
+        name: '',
+        sexe: '',
+        neko: neko
+      })
+    } else {
+      this.setState({
+        error: true
+      })
+    }
   }
 
   render() {
-    const { name, sexe, isSubmitting } = this.state
+    const { name, sexe, isSubmitting, error } = this.state
     return (
-      <StyledCreateNeko>
+      <StyledCreateNeko error={error}>
         <img src={require('../img/logo_neko_nect.jpg')} className="Logo" alt="logo" />
         <form className="Form" onSubmit={this.createNeko}>
           <div className="Form_inputs">
@@ -158,6 +171,7 @@ class CreateNeko extends Component {
               </div>
             </div>
           </div>
+          {error && <span className="Error">Champs incorrects ou incomplets</span>}
           <div className="Button_wrapper">
             <button
               type="submit"
