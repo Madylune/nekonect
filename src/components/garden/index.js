@@ -5,6 +5,7 @@ import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import random from 'lodash/random'
 import AutoPlayAudio from '../AutoPlayAudio'
 import ZingTouch from 'zingtouch'
+import SocketIOClient from 'socket.io-client'
 
 const StyledGarden = styled.div`
   height: 100%;
