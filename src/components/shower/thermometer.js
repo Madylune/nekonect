@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import random from 'lodash/random'
+import SocketIOClient from 'socket.io-client'
 
 const StyledThermometer = styled.div`
   position: absolute;
@@ -58,6 +59,7 @@ class Thermometer extends Component {
       temperature: event.target.value
     })
     this.props.makeHappy(random(0, 1))
+    this.socket.emit('wash');
     if (temperature > 70) {
       console.log('Trop chaud !')
     }
@@ -66,6 +68,9 @@ class Thermometer extends Component {
     }
   }
 
+  componentDidMount() {
+    this.socket = SocketIOClient('http://192.168.1.29:8080/')
+  }
   render() {
     const { temperature } = this.state
     return (

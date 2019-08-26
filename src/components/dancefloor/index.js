@@ -5,6 +5,7 @@ import logo from '../../img/gif/party.gif'
 import map from 'lodash/map'
 import random from 'lodash/random'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
+import SocketIOClient from 'socket.io-client'
 
 
 const StyledDiv = styled.div`
@@ -118,8 +119,12 @@ class Dancefloor extends Component {
         animated: false
       })
     }, 7000)
-
+    this.socket.emit('danse')
     this.props.makeHappy(random(5, 10))
+  }
+
+  componentDidMount() {
+    this.socket = SocketIOClient('http://192.168.1.29:8080/')
   }
 
   render() {

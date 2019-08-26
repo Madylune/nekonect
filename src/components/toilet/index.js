@@ -6,6 +6,7 @@ import logo from '../../img/gif/toilet.png'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import throttle from 'lodash/throttle'
 import random from 'lodash/random'
+import SocketIOClient from 'socket.io-client'
 
 const StyledToilet = styled.div`
   margin: 0;
@@ -60,7 +61,7 @@ class Toilet extends Component {
 
     var sound = document.querySelector(".Flush")
     sound.play()
-
+    this.socket.emit('toilet')
     this.setState({
       animated: true
     })
@@ -76,6 +77,9 @@ class Toilet extends Component {
     this.timeout && clearTimeout(this.timeout)
   }
 
+  componentDidMount() {
+    this.socket = SocketIOClient('http://192.168.1.29:8080/')
+  }
   render() {
     const { animated } = this.state
     return (
