@@ -102,6 +102,8 @@ const StyledKitchen = styled.div`
     0% { top: 0px; left: 0px }
     100% { top: 270px; left: -30px }
   }
+
+
 `
 
 const foods = [
