@@ -1,6 +1,6 @@
 import get from 'lodash/get'
 
-export const CODE_LOAD_SUCCESS = 'time.change.to.night'
+export const CODE_LOAD_SUCCESS = 'code.load.success'
 
 const reducer = (state = [], { type, payload }) => {
   switch (type) {

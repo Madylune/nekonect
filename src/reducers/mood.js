@@ -8,8 +8,7 @@ export const MOOD_IS_MAX = 'mood.is.max'
 
 const initialState = {
   value: null,
-  isDead: false,
-  moodIsMax: false
+  isDead: false
 }
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -28,11 +27,6 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isDead: get(payload, 'isDead')
-      }
-    case MOOD_IS_MAX:
-      return {
-        ...state,
-        moodIsMax: true
       }
     default:
       return state
