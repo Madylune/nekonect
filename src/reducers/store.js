@@ -17,6 +17,11 @@ const initialState = {
       name: "umbrella",
       icon: "umbrella.png",
       place: "/garden"
+    },
+    {
+      name: "bear",
+      icon: "bear.png",
+      place: "/night"
     }
   ]
 };
