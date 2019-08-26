@@ -38,6 +38,12 @@ const StyledStore = styled.div`
     left: 40%;
   }
 
+  .Icon-bear {
+    position: absolute;
+    top: 303px;
+    left: 40%;
+  }
+
   .bounce {
     animation-name: bounce;
   }

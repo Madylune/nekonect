@@ -20,6 +20,15 @@ const StyledFurniture = styled.div`
     right: 9px;
     transform: rotate(-12deg);
   }
+
+  .Icon-bear {
+    position: absolute;
+    width: 75px;
+    height: 85px;
+    top: 363px;
+    right: 125px;
+    transform: rotate(-92deg);
+  }
 `
 function Furniture(props) {
   const items = props.items
