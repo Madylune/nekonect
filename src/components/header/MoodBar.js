@@ -33,7 +33,7 @@ class MoodBar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { moodValue, makeHappyVal, isNight, changeMoodMax } = this.props
+    const { moodValue, makeHappyVal, isNight, changeMoodMax, moodChange } = this.props
     const { value } = this.state
     if (prevProps.moodValue !== moodValue) {
       this.initMoodValue()
@@ -43,13 +43,13 @@ class MoodBar extends Component {
       this.setState({
         value: this.state.value + makeHappyVal
       })
+      moodChange(this.state.value + makeHappyVal)
     }
     if (prevProps.isNight !== isNight) {
       isNight ? this.stopTicking() : this.startTicking()
     }
     if (value >= 100) {
       changeMoodMax(true)
-      this.stopTicking()
     } 
   }
   
@@ -65,12 +65,12 @@ class MoodBar extends Component {
   }
 
   startTicking = () => {
-    const { moodChange } = this.props
+    const { moodChange, moodValue } = this.props
     this.intervalID = setInterval(
       () => this.tick(),
       3000
     )
-    moodChange(RANDOM_VALUE)
+    moodChange(moodValue ? moodValue : RANDOM_VALUE)
     this.initMoodValue()
   }
 
