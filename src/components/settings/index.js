@@ -1,8 +1,12 @@
 
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import get from 'lodash/get'
 import styled from 'styled-components'
 import sound from '../../img/icons/speaker.png'
 import papatte from '../../img/backgrounds/papatte.png'
+import { getPlural } from '../../utils/string'
+import { timeDifference } from '../../utils/time'
 
 const StyledSettingsGlobal = styled.div`
   margin-top: 30%;
@@ -83,24 +87,55 @@ const StyledButton = styled.div`
   }
 `
 
-const Settings = () => (
-  <StyledSettingsGlobal>
-    <img src={papatte} className="papatte" alt="Patte de chat" />
-    <StyledSettings>
-      <StyledText>Nom : Pusheen</StyledText>
-      <StyledText>Age : 33 jours</StyledText>
-      <StyledText>Sexe : Masculin</StyledText>
-      <StyledImg>
-        <img src={sound} className="speaker" alt="Haut parleur" />
-        <input type="range" className="slider" id="myRange"
-          max="50" min="0" step="0.01" />
-      </StyledImg>
-      <StyledButton>
-        <input type="button" value="Conditions générales" className="button"></input>
-        <input type="button" value="Réinitialiser" className="button"></input>
-      </StyledButton>
-    </StyledSettings>
-  </StyledSettingsGlobal>
-)
+class Settings extends Component {
+  state = {
+    now: new Date()
+  }
+  componentDidMount() {
+    this.intervalID = setInterval(
+      () => this.tick(),
+      10000
+    )
+  }
+  componentWillUnmount() {
+    clearInterval(this.intervalID)
+  }
+  tick() {
+    this.setState({
+      now: new Date()
+    })
+  }
+  render() {
+    const { now } = this.state
+    const { neko } = this.props
+    const from = get(neko, 'birthdate').toDate()
+    const age = timeDifference(from, now)
+    const { days, hours, minutes } = age
 
-export default Settings
+    return (
+      <StyledSettingsGlobal>
+        <img src={papatte} className="papatte" alt="Patte de chat" />
+        <StyledSettings>
+          <StyledText>Nom : {get(neko, 'name', 'Neko')}</StyledText>
+          <StyledText>Age : {days} jour{getPlural(days, 1, 's')}, {hours} h et {minutes} min</StyledText>
+          <StyledText>Sexe : {get(neko, 'sexe') === 'male' ? 'Masculin' : 'Féminin'}</StyledText>
+          <StyledImg>
+            <img src={sound} className="speaker" alt="Haut parleur" />
+            <input type="range" className="slider" id="myRange"
+              max="50" min="0" step="0.01" />
+          </StyledImg>
+          <StyledButton>
+            <input type="button" value="Conditions générales" className="button"></input>
+            <input type="button" value="Réinitialiser" className="button"></input>
+          </StyledButton>
+        </StyledSettings>
+      </StyledSettingsGlobal>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  neko: get(state, 'neko')
+})
+
+export default connect(mapStateToProps)(Settings)
