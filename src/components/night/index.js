@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { TIME_CHANGE_TO_NIGHT } from '../../reducers/time'
 import AutoPlayAudio from '../AutoPlayAudio'
+import { SERVER_URL } from '../../api/serveur'
+import SocketIOClient from 'socket.io-client'
 
 const StyledNight = styled.div`
   .Neko_night {
@@ -16,10 +18,14 @@ const StyledNight = styled.div`
 class Night extends Component {
   componentDidMount() {
     this.props.changeToNight(true)
+    this.socket = SocketIOClient(SERVER_URL)
+    this.socket.emit('ronflement');
   }
 
   componentWillUnmount() {  
     this.props.changeToNight(false)
+    this.socket.emit('reveil');
+    
   }
 
   render() {

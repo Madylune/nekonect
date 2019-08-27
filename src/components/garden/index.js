@@ -5,7 +5,9 @@ import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import random from 'lodash/random'
 import AutoPlayAudio from '../AutoPlayAudio'
 import ZingTouch from 'zingtouch'
+import { SERVER_URL } from '../../api/serveur'
 import SocketIOClient from 'socket.io-client'
+
 
 const StyledGarden = styled.div`
   height: 100%;
@@ -41,12 +43,16 @@ class Garden extends Component {
   
   componentDidMount() {
     this.initZingTouch()
+    this.socket = SocketIOClient(SERVER_URL);
+    this.socket.emit('foot');
+
   }
 
   initZingTouch = () => {
     const dragArea = this.playAreaRef.current
     const dragItem = this.ballRef.current
     const controlRegion = new ZingTouch.Region(dragArea)
+
 
     controlRegion.bind(dragItem, 'pan', (e) => {
       const event = e.detail.events[0]
