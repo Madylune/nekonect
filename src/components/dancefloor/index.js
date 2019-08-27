@@ -6,6 +6,7 @@ import map from 'lodash/map'
 import random from 'lodash/random'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import SocketIOClient from 'socket.io-client'
+import { SERVER_URL } from '../../api/serveur'
 
 
 const StyledDiv = styled.div`
@@ -124,7 +125,7 @@ class Dancefloor extends Component {
   }
 
   componentDidMount() {
-    this.socket = SocketIOClient('http://192.168.1.29:8080/')
+    this.socket = SocketIOClient(SERVER_URL)
   }
 
   render() {

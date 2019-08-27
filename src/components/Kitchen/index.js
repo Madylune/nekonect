@@ -5,6 +5,7 @@ import map from 'lodash/map'
 import random from 'lodash/random'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import SocketIOClient from 'socket.io-client'
+import { SERVER_URL } from '../../api/serveur'
 
 const StyledKitchen = styled.div`
   .Icon-kitchen {
@@ -139,7 +140,16 @@ class Kitchen extends Component {
     animateItem: undefined
   }
 
-  eat = i => {  
+  eat = i => { 
+    console.log(i) //burger
+    if (i == 0) {
+      console.log("i like burger")
+      this.socket.emit('burger');     
+    } 
+    if (i == 5) {
+      console.log("beer")
+      this.socket.emit('beer');  
+    }
     this.setState({
       animateItem: i
     }) 
@@ -157,7 +167,7 @@ class Kitchen extends Component {
   }
 
   componentDidMount() {
-    this.socket = SocketIOClient('http://192.168.1.29:8080/');
+    this.socket = SocketIOClient(SERVER_URL);
   }
 
   render() {

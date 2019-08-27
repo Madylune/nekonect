@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import random from 'lodash/random'
 import SocketIOClient from 'socket.io-client'
+import { SERVER_URL } from '../../api/serveur'
+
 
 const StyledThermometer = styled.div`
   position: absolute;
@@ -60,16 +62,22 @@ class Thermometer extends Component {
     })
     this.props.makeHappy(random(0, 1))
     this.socket.emit('wash');
-    if (temperature > 70) {
+    if (temperature > 85) {
       console.log('Trop chaud !')
+     this.socket.emit('hot');
     }
-    if (temperature < 30) {
+    if (temperature < 20) {
       console.log('Trop froid !')
+      this.socket.emit('cold');
+    } 
+    if (temperature > 60 && temperature < 65) { 
+      console.log('perfect')
+      this.socket.emit('perfect');
     }
   }
 
   componentDidMount() {
-    this.socket = SocketIOClient('http://192.168.1.29:8080/')
+    this.socket = SocketIOClient(SERVER_URL)
   }
   render() {
     const { temperature } = this.state

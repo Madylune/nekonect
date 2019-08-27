@@ -7,6 +7,7 @@ import { MOOD_CHANGED_HAPPY } from '../../reducers/mood'
 import throttle from 'lodash/throttle'
 import random from 'lodash/random'
 import SocketIOClient from 'socket.io-client'
+import { SERVER_URL } from '../../api/serveur'
 
 const StyledToilet = styled.div`
   margin: 0;
@@ -78,7 +79,7 @@ class Toilet extends Component {
   }
 
   componentDidMount() {
-    this.socket = SocketIOClient('http://192.168.1.29:8080/')
+    this.socket = SocketIOClient(SERVER_URL)
   }
   render() {
     const { animated } = this.state
