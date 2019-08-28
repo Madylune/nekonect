@@ -165,6 +165,8 @@ class Kitchen extends Component {
 
   componentDidMount() {
     this.socket = SocketIOClient(SERVER_URL);
+    this.socket.emit('badge');     
+
   }
 
   render() {
