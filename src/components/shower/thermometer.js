@@ -6,92 +6,57 @@ import random from 'lodash/random'
 import SocketIOClient from 'socket.io-client'
 import { SERVER_URL } from '../../api/serveur'
 
-
 const StyledThermometer = styled.div`
-  position: absolute;
-  top: 250px;
-  right: 25px;
-  height: 350px;
-  width: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 45px;
 
-  .Slider {
-    -webkit-appearance: none;
-    border-radius: 40px;  
-    border: 2px solid #ffffff;
-    background-image: linear-gradient(to left, #f53b13 0%, #46C8F5 100%);
-    outline: none;
-    -webkit-transition: .2s;
-    transition: opacity .2s; 
-
-    width: 350px;
-    height: 35px;
-    margin: 0;
-    transform-origin: 75px 75px;
-    transform: rotate(-90deg);
-  }
-
-  .Slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 33px;
-    height: 33px;
-    border-radius: 50%; 
-    background: #ffffff;
-    cursor: pointer;
-  }
-  .Slider::-moz-range-thumb {
-    width: 33px;
-    height: 33px;
+  .Temp_btn {
+    border: 2px solid white;
     border-radius: 50%;
-    background: #ffffff;
+    height: 90px;
+    width: 90px;
+    margin: 5px 0;
+    font-size: 17px;
+    color: white;
     cursor: pointer;
+
+    &.hot {
+      background-image: linear-gradient(to left, #f53b13 0%, #f58746 100%);
+    }
+    &.medium {
+      background-image: linear-gradient(to left, #13f545 0%, #2a961d 100%);
+    }
+    &.cold {
+      background-image: linear-gradient(to left, #1377f5 0%, #2a22ad 100%);
+    }
   }
 `
 
 class Thermometer extends Component {
   audioRef = createRef()
-  state = {
-    temperature: 50
-  }
 
-  handleChange = event => {
+  handleChange = type => {
     this.audioRef.current.play()
-    const { temperature } = this.state
-    this.setState({
-      temperature: event.target.value
-    })
-    this.props.makeHappy(random(0, 1))
-    this.socket.emit('wash');
-    if (temperature > 85) {
-     this.socket.emit('hot');
-    }
-    if (temperature < 20) {
-      this.socket.emit('cold');
-    } 
-    if (temperature > 60 && temperature < 65) { 
-      this.socket.emit('perfect');
-    }
+    this.props.makeHappy(random(5, 10))
+    this.socket.emit(type)
   }
 
   componentDidMount() {
     this.socket = SocketIOClient(SERVER_URL)
   }
   render() {
-    const { temperature } = this.state
     return (
       <StyledThermometer>
         <audio 
           ref={this.audioRef}
           src={require(`../../sound/soundShower.mp3`)}>
         </audio>
-        <input 
-          className="Slider" 
-          type="range" 
-          orient="vertical"
-          min="0" max="100" 
-          value={temperature} 
-          onChange={this.handleChange}
-        />
+        <button className="Temp_btn hot" onClick={() => this.handleChange('hot')}>Eau chaude</button>
+        <button className="Temp_btn medium" onClick={() => this.handleChange('perfect')}>Eau tiède</button>
+        <button className="Temp_btn cold" onClick={() => this.handleChange('cold')}>Eau froide</button>
       </StyledThermometer>
     )
   }
