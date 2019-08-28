@@ -141,13 +141,10 @@ class Kitchen extends Component {
   }
 
   eat = i => { 
-    console.log(i) //burger
-    if (i == 0) {
-      console.log("i like burger")
+    if (i === 0) {
       this.socket.emit('burger');     
     } 
-    if (i == 5) {
-      console.log("beer")
+    if (i === 5) {
       this.socket.emit('beer');  
     }
     this.setState({
