@@ -36,7 +36,6 @@ const reducer = (state = initialState, { type, payload }) => {
       };
     case STORE_REMOVE:
       let removedItem = get(payload, "removedItem");
-      console.log(state.items);
       return {
         ...state,
         items: filter(state.items, item => item.name !== removedItem.name)

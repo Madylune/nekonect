@@ -63,15 +63,12 @@ class Thermometer extends Component {
     this.props.makeHappy(random(0, 1))
     this.socket.emit('wash');
     if (temperature > 85) {
-      console.log('Trop chaud !')
      this.socket.emit('hot');
     }
     if (temperature < 20) {
-      console.log('Trop froid !')
       this.socket.emit('cold');
     } 
     if (temperature > 60 && temperature < 65) { 
-      console.log('perfect')
       this.socket.emit('perfect');
     }
   }
