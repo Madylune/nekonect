@@ -19,12 +19,12 @@ class Night extends Component {
   componentDidMount() {
     this.props.changeToNight(true)
     this.socket = SocketIOClient(SERVER_URL)
-    this.socket.emit('ronflement');
+    this.socket.emit('sleep');
   }
 
   componentWillUnmount() {  
     this.props.changeToNight(false)
-    this.socket.emit('reveil');
+    this.socket.emit('wakeup');
     
   }
 

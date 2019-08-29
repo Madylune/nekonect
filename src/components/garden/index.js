@@ -44,15 +44,13 @@ class Garden extends Component {
   componentDidMount() {
     this.initZingTouch()
     this.socket = SocketIOClient(SERVER_URL);
-    this.socket.emit('foot');
-
+    this.socket.emit('play');
   }
 
   initZingTouch = () => {
     const dragArea = this.playAreaRef.current
     const dragItem = this.ballRef.current
     const controlRegion = new ZingTouch.Region(dragArea)
-
 
     controlRegion.bind(dragItem, 'pan', (e) => {
       const event = e.detail.events[0]
