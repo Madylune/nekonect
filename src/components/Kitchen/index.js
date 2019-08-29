@@ -143,9 +143,10 @@ class Kitchen extends Component {
   eat = i => { 
     if (i === 0) {
       this.socket.emit('burger');     
-    } 
-    if (i === 5) {
+    } else if (i === 5) {
       this.socket.emit('beer');  
+    } else {
+      this.socket.emit('eat');
     }
     this.setState({
       animateItem: i
@@ -155,7 +156,6 @@ class Kitchen extends Component {
         animateItem: undefined
       })
     }, 5000)
-    this.socket.emit('eat');
     this.props.makeHappy(random(20, 25))
   }
 

@@ -19,16 +19,18 @@ const StyledDiv = styled.div`
     bottom: -552%;
     right: 13%;
     height: auto;
-    transition: .3s ease-in-out;
-    -webkit-transition: .3s ease-in-out;
-    animation:  ${props => props.animated ? 'dance 1.2s infinite alternate both' : '' };
+    /* transition: 0.5s ease-in-out; */
+    animation:  ${props => props.animated ? 'dance 3s linear 1s infinite alternate both' : '' };
   }
   @keyframes dance {
     0% {
       transform: translateX(0);
     }
-    100% {
+    50%{ 
       transform: translateX(-100px);
+    }
+    100% {
+      transform: translateX(0);
     }
   }
   
@@ -97,17 +99,22 @@ class Dancefloor extends Component {
 
   // Fonction qui vas déclancher l'instrument choisie et faire bouger la peluche
   dance = value => {   
+    this.setState({
+      animated: false
+    })
     //Arrêter les différentes musiques
     map(musics, (music, i) => {
-          var soundPlayer = document.querySelector(`.${music.name}`);
-          soundPlayer.pause();
-          soundPlayer.currentTime = 0;
-        }
+        var soundPlayer = document.querySelector(`.${music.name}`);
+        soundPlayer.pause();
+        soundPlayer.currentTime = 0;
+      }
     )
 
-    // Activer le lecteur audio choisie
-    var sound = document.querySelector(`.${musics[value].name}`);
-    sound.play();
+    this.timeout = setTimeout(() => {
+      // Activer le lecteur audio choisie
+      var sound = document.querySelector(`.${musics[value].name}`);
+      sound.play();
+    }, 4500)
 
     // Animer le pusheen
     this.setState({
@@ -119,13 +126,17 @@ class Dancefloor extends Component {
       this.setState({
         animated: false
       })
-    }, 7000)
+    }, 9000)
     this.socket.emit('danse')
     this.props.makeHappy(random(5, 10))
   }
 
   componentDidMount() {
     this.socket = SocketIOClient(SERVER_URL)
+  }
+
+  componentWillUnmount() {
+    this.timeout && clearTimeout(this.timeout)
   }
 
   render() {
